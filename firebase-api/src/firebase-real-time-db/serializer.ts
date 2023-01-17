@@ -1,6 +1,7 @@
 import {Table, TableColumn, TableRecord} from "./models";
 
 export function DetectTables(currentNode: any, currentNodeKey: string, allTable: Table[], path: string, parent?: Table) {
+    allTable.splice(0, allTable.length-1);
     if (typeof currentNode == "object") {
         let currentNodeKeys = Object.keys(currentNode);
         if (currentNodeKeys.length > 0 && (typeof currentNode[currentNodeKeys[0]] === 'object')) {

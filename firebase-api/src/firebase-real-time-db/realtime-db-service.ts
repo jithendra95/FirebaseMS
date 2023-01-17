@@ -12,12 +12,4 @@ export class RealtimeDbService{
         return this.allTables;
     }
 
-    static GetRootTables(): Table[]{
-        return this.allTables.filter(x=> x.parentPath === "");
-    }
-
-    static GetTableTreeUpToNode(path: string): Table | undefined{
-        let baseTable = this.allTables.find(x=> x.path === path);
-        return baseTable;
-    }
 }

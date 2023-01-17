@@ -1,10 +1,12 @@
-﻿namespace Connection;
+﻿using System.Text.Json.Nodes;
+
+namespace Connection;
 
 public interface IDatabaseApi<T>
 {
     public T Read(string id);
     
-    public IEnumerable<T> ReadAll();
+    public Task<IEnumerable<T>> ReadAll();
     
     public bool Create(T newObject);
     

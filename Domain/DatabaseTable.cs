@@ -2,15 +2,18 @@
 
 public sealed class DatabaseTable : IDatabaseTable
 {
-    public IEnumerable<IDatabaseTableColumn> Columns { get; }
-    public IEnumerable<IDatabaseTableRow> Rows { get; }
+    public readonly string Name;
+    public string Path { get; }
+    public string ParentPath { get; }
+    public IEnumerable<DatabaseTableRecord> Records { get; }
 
-    public DatabaseTable(IEnumerable<IDatabaseTableColumn> columns,
-        IEnumerable<IDatabaseTableRow> rows)
+    public DatabaseTable(string name,
+        string path,
+        IEnumerable<DatabaseTableRecord> records, string parentPath)
     {
-        Columns = columns;
-        Rows = rows;
+        Name = name;
+        Path = path;
+        Records = records;
+        ParentPath = parentPath;
     }
-
-  
 }

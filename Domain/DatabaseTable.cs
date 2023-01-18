@@ -1,11 +1,22 @@
-﻿namespace Domain;
+﻿using ProtoBuf;
 
+namespace Domain;
+
+[ProtoContract]
 public sealed class DatabaseTable : IDatabaseTable
 {
-    public readonly string Name;
-    public string Path { get; }
-    public string ParentPath { get; }
-    public IEnumerable<DatabaseTableRecord> Records { get; }
+    [ProtoMember(1)] public string Name { get; set; }
+    [ProtoMember(2)] public string Path { get; set; }
+    [ProtoMember(3)] public string ParentPath { get; set; }
+    [ProtoMember(4)] public IEnumerable<DatabaseTableRecord> Records { get; set; }
+
+    public DatabaseTable()
+    {
+        Records = new List<DatabaseTableRecord>
+        {
+            Capacity = 0
+        };
+    }
 
     public DatabaseTable(string name,
         string path,

@@ -1,10 +1,14 @@
-﻿namespace Domain;
+﻿using ProtoBuf;
 
+namespace Domain;
+[ProtoContract]
 public class Database : IDatabase
 {
-    public IEnumerable<IDatabaseTable> Tables { get; }
-
-    public Database(IEnumerable<IDatabaseTable> tables)
+    [ProtoMember(1)]
+    public IEnumerable<DatabaseTable> Tables { get; set; }
+  
+    public Database(){}
+    public Database(IEnumerable<DatabaseTable> tables)
     {
         Tables = tables;
     }

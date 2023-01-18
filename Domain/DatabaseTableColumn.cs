@@ -1,11 +1,16 @@
-﻿namespace Domain;
+﻿using ProtoBuf;
 
-public  class DatabaseTableColumn : IDatabaseTableColumn
+namespace Domain;
+
+[ProtoContract]
+public class DatabaseTableColumn : IDatabaseTableColumn
 {
-    public string Name { get; }
-    public ColumnDataType DataType { get; }
+    [ProtoMember(1)] public string Name { get; set;}
+    [ProtoMember(2)] public ColumnDataType DataType { get; set;}
 
-    public string Value { get; }
+    [ProtoMember(3)] public string Value { get; set;}
+
+    public DatabaseTableColumn(){}
     public DatabaseTableColumn(string name, ColumnDataType dataType, string value)
     {
         Name = name;

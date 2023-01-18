@@ -14,10 +14,15 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="protobuf-net.Grpc" Version="1.0.179" />
     </ItemGroup>
 
     <ItemGroup>
         <Protobuf Include="Protos\greet.proto" GrpcServices="Client" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GrpcService\GrpcService.csproj" />
     </ItemGroup>
 
 

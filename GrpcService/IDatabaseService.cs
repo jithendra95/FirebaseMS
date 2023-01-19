@@ -6,5 +6,5 @@ namespace GrpcService.Services;
 public interface IDatabaseService
 {
     [OperationContract]
-    Task<Database> GetDatabase();
+    Database GetDatabase();
 }

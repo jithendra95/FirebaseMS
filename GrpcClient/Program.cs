@@ -19,7 +19,7 @@ GrpcClientFactory.AllowUnencryptedHttp2 = true;
 using (var channel = GrpcChannel.ForAddress("http://localhost:10042"))
 {
     var databaseService = channel.CreateGrpcService<IDatabaseService>();
-    var result =  await  databaseService.GetDatabase();
+    var result =  databaseService.GetDatabase();
     foreach (var table in result.Tables)
     {
         Console.WriteLine(table.Name);

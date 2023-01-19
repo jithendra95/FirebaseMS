@@ -1,7 +1,13 @@
+using GrpcClient;
+using GrpcClient.ServerConnection;
+using GrpcService.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddSingleton<ServerChannelFactory>();
+builder.Services.AddSingleton<ServerConnectionProvider>();
+builder.Services.AddSingleton<IDatabaseService, DatabaseRpcClient>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

@@ -15,14 +15,14 @@ public class DatabaseService: IDatabaseService
         _realtimeDbFactory = realtimeDbFactory;
     }
 
-
-    private async Task<Database> LoadDatabase()
+    public Database GetDatabase()
     {
-        _database = await _realtimeDbFactory.CreateRealtimeDb();
-        return _database;
+        return _database ?? LoadDatabase();
     }
-    public Task<Database> GetDatabase()
+    
+    private Database LoadDatabase()
     {
-        return _database != null ? Task.FromResult(_database) : LoadDatabase();
+        _database =  _realtimeDbFactory.CreateRealtimeDb().Result;
+        return _database;
     }
 }

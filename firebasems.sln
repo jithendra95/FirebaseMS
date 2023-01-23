@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "firebasems", "firebasems\firebasems.csproj", "{04AC7F7F-4B19-4391-81F9-5AF6C456FFD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirebaseMS", "FirebaseMS\FirebaseMS.csproj", "{04AC7F7F-4B19-4391-81F9-5AF6C456FFD8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{3D65C4EE-EE75-43A6-8388-8970B02D65D5}"
 EndProject

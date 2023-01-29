@@ -1,4 +1,4 @@
-﻿using GrpcService.Services;
+﻿using GrpcServer;
 using ProtoBuf.Grpc.Client;
 
 namespace GrpcClient.ServerConnection;

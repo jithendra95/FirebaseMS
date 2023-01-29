@@ -1,7 +1,8 @@
 ﻿using System.IO.Compression;
 using FirestoreDatabase;
+using GrpcServer;
+using GrpcServer.Services;
 using GrpcServer.Extensions;
-using GrpcService.Services;
 using ProtoBuf.Grpc.Server;
 
 namespace GrpcServer

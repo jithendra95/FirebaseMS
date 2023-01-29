@@ -1,7 +1,7 @@
 ﻿using Domain;
 using FirestoreDatabase;
 
-namespace GrpcService.Services;
+namespace GrpcServer.Services;
 
 public class DatabaseService: IDatabaseService
 {

@@ -1,7 +1,7 @@
 ﻿using System.ServiceModel;
 using Domain;
 
-namespace GrpcService.Services;
+namespace GrpcServer;
 [ServiceContract]
 public interface IDatabaseService
 {

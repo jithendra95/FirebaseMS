@@ -2,7 +2,7 @@
 
 using Grpc.Net.Client;
 using GrpcClient;
-using GrpcService.Services;
+using GrpcServer;
 using ProtoBuf.Grpc.Client;
 
 Console.WriteLine("Hello, World!");

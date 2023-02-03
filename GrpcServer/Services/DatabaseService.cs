@@ -1,28 +1,31 @@
 ﻿using Domain;
-using FirestoreDatabase;
+using FirebaseDatabase;
 
 namespace GrpcServer.Services;
 
 public class DatabaseService: IDatabaseService
 {
     private readonly ILogger<DatabaseService> _logger;
-    private readonly RealtimeDbFactory _realtimeDbFactory;
-    private Database? _database;
+    private readonly IDatabaseFactory _databaseFactory;
 
-    public DatabaseService(ILogger<DatabaseService> logger, RealtimeDbFactory realtimeDbFactory)
+
+    public DatabaseService(ILogger<DatabaseService> logger, IDatabaseFactory databaseFactory)
     {
         _logger = logger;
-        _realtimeDbFactory = realtimeDbFactory;
+        _databaseFactory = databaseFactory;
     }
 
-    public Database GetDatabase()
+    public IEnumerable<Database> GetDatabases()
     {
-        return _database ?? LoadDatabase();
+        return _databaseFactory.GetAllDatabases();
+    }
+    public Database GetDatabase(string id)
+    {
+        return LoadDatabase(id);
     }
     
-    private Database LoadDatabase()
+    private Database LoadDatabase(string id)
     {
-        _database =  _realtimeDbFactory.CreateRealtimeDb().Result;
-        return _database;
+        return _databaseFactory.GetDatabase(id);
     }
 }

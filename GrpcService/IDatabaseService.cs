@@ -6,5 +6,8 @@ namespace GrpcServer;
 public interface IDatabaseService
 {
     [OperationContract]
-    Database GetDatabase();
+    IEnumerable<Database> GetDatabases();
+    
+    [OperationContract]
+    Database GetDatabase(string id);
 }

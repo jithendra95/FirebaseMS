@@ -1,5 +1,5 @@
 ﻿using System.IO.Compression;
-using FirestoreDatabase;
+using FirebaseDatabase;
 using GrpcServer;
 using GrpcServer.Services;
 using GrpcServer.Extensions;
@@ -21,7 +21,7 @@ namespace GrpcServer
 
             services.AddAuthorization();
             services.AddScoped<RealtimeDbApi>();
-            services.AddScoped<RealtimeDbFactory>();
+            services.AddScoped<DatabaseFactory>();
             services.AddSingleton<IDatabaseService, DatabaseService>();
         }
 

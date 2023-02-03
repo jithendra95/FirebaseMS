@@ -4,9 +4,7 @@ namespace Connection;
 
 public interface IDatabaseApi<T>
 {
-    public T Read(string id);
-    
-    public Task<IEnumerable<T>> ReadAll();
+    public T Read(T newObject);
     
     public bool Create(T newObject);
     

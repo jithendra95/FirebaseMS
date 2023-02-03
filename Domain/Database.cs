@@ -1,16 +1,27 @@
-﻿using ProtoBuf;
+﻿namespace Domain;
 
-namespace Domain;
-[ProtoContract]
 public class Database : IDatabase
 {
-    [ProtoMember(1)]
+    public string Id { get;}
+
+    public string PathToCredentials { get; }
+
+    public DatabaseTypeEnum DatabaseType;
     public IEnumerable<DatabaseTable> Tables { get; set; }
-  
-    public Database(){}
-    public Database(IEnumerable<DatabaseTable> tables)
+
+
+    public Database(string id, string pathToCredentials, IEnumerable<DatabaseTable> tables)
     {
         Tables = tables;
+        Id = id;
+        PathToCredentials = pathToCredentials;
     }
 
+    
+}
+
+public enum DatabaseTypeEnum
+{
+    realtimedb,
+    firestore
 }

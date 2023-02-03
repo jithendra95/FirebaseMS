@@ -18,8 +18,8 @@ public class DatabaseController  : ControllerBase
     }
     
     [HttpGet]
-    public Database Get()
+    public Database Get(string id)
     {
-        return _databaseServer.GetDatabase();
+        return _databaseServer.GetDatabase(id);
     }
 }

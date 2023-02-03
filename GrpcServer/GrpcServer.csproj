@@ -19,7 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GrpcService\GrpcService.csproj" />
-      <ProjectReference Include="..\RealtimeDb\RealtimeDb.csproj" />
+      <ProjectReference Include="..\FirebaseDatabase\FirebaseDatabase.csproj" />
     </ItemGroup>
 
 </Project>

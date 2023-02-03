@@ -1,11 +1,10 @@
 ﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using Connection;
 using Domain;
 
-namespace FirestoreDatabase;
+namespace FirebaseDatabase;
 
-public class RealtimeDbApi : IDatabaseApi<DatabaseTable>
+public class RealtimeDbApi : IDatabaseApi<Database>
 {
     private HttpClient _client;
     private string _path;
@@ -21,28 +20,25 @@ public class RealtimeDbApi : IDatabaseApi<DatabaseTable>
         _path = "realtimeDb";
     }
 
-    public DatabaseTable Read(string id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IEnumerable<DatabaseTable>> ReadAll()
+    public Database Read(Domain.Database database)
     {
         var databaseTables = new List<DatabaseTable>();
-        var response = await _client.GetAsync(_path);
+        var response = _client.GetAsync(_path).Result;
         if (response.IsSuccessStatusCode)
         {
-            databaseTables = await response.Content.ReadAsAsync<List<DatabaseTable>>();
+            databaseTables = response.Content.ReadAsAsync<List<DatabaseTable>>().Result;
         }
-        return databaseTables;
+        database.Tables =  databaseTables;
+
+        return database;
     }
 
-    public bool Create(DatabaseTable newObject)
+    public bool Create(Database newObject)
     {
         throw new NotImplementedException();
     }
 
-    public bool Update(string id, DatabaseTable newObject)
+    public bool Update(string id, Database newObject)
     {
         throw new NotImplementedException();
     }

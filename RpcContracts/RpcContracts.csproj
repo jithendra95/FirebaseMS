@@ -4,16 +4,14 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>FirestoreDatabase</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Connection\Connection.csproj" />
-      <ProjectReference Include="..\Domain\Domain.csproj" />
+      <PackageReference Include="protobuf-net.Grpc" Version="1.1.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
 </Project>

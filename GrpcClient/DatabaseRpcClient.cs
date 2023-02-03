@@ -13,8 +13,13 @@ public class DatabaseRpcClient: IDatabaseService
         _server = serverConnection.CreateService();
     }
 
-    public Database GetDatabase()
+    public IEnumerable<Database> GetDatabases()
     {
-        return _server.GetDatabase();
+        return _server.GetDatabases();
+    }
+
+    public Database GetDatabase(string id)
+    {
+        return _server.GetDatabase(id);
     }
 }

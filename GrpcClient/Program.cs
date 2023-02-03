@@ -1,8 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using Grpc.Net.Client;
-using GrpcClient;
-using GrpcServer;
 using ProtoBuf.Grpc.Client;
 
 Console.WriteLine("Hello, World!");
@@ -16,31 +13,31 @@ Console.WriteLine("Hello, World!");
 // Console.ReadKey();
 
 GrpcClientFactory.AllowUnencryptedHttp2 = true;
-using (var channel = GrpcChannel.ForAddress("http://localhost:10042"))
-{
-    var databaseService = channel.CreateGrpcService<IDatabaseService>();
-    var result =  databaseService.GetDatabase();
-    foreach (var table in result.Tables)
-    {
-        Console.WriteLine(table.Name);
-        if (table.Records.Any())
-        {
-            var columns = table.Records.First().Columns;
-            foreach (var column in columns)
-            {
-                Console.Write($" {column.Name} |");
-            }
-
-            Console.WriteLine();
-        }
-
-        foreach (var row in table.Records)
-        {
-            foreach (var column in row.Columns)
-            {
-                Console.Write($" {column.Value} |");
-            }
-            Console.WriteLine();
-        }
-    }
-}
+// using (var channel = GrpcChannel.ForAddress("http://localhost:10042"))
+// {
+//     var databaseService = channel.CreateGrpcService<IDatabaseService>();
+//     var result =  databaseService.GetDatabase();
+//     foreach (var table in result.Tables)
+//     {
+//         Console.WriteLine(table.Name);
+//         if (table.Records.Any())
+//         {
+//             var columns = table.Records.First().Columns;
+//             foreach (var column in columns)
+//             {
+//                 Console.Write($" {column.Name} |");
+//             }
+//
+//             Console.WriteLine();
+//         }
+//
+//         foreach (var row in table.Records)
+//         {
+//             foreach (var column in row.Columns)
+//             {
+//                 Console.Write($" {column.Value} |");
+//             }
+//             Console.WriteLine();
+//         }
+//      }
+// }

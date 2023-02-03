@@ -1,4 +1,4 @@
-﻿namespace GrpcServer.Repository;
+﻿namespace FirebaseDatabase.Repository;
 
 public interface IRepository<T>
 {

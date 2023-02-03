@@ -1,6 +1,6 @@
-﻿namespace GrpcServer.Repository;
+﻿namespace FirebaseDatabase.Repository;
 
-public class BaseRepository<T>: IRepository<T>
+public class BaseRepository<T> : IRepository<T>
 {
     public bool Save(T value)
     {

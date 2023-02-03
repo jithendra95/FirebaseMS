@@ -1,6 +1,6 @@
-﻿using Domain;
-using GrpcService;
+﻿using GrpcService;
 using Microsoft.AspNetCore.Mvc;
+using RpcContracts.DatabaseMessages;
 
 namespace WebApp.Controllers;
 
@@ -18,7 +18,7 @@ public class DatabaseController  : ControllerBase
     }
     
     [HttpGet]
-    public Database Get(string id)
+    public DatabaseMessage Get(string id)
     {
         return _databaseServer.GetDatabase(id);
     }

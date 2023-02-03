@@ -1,6 +1,6 @@
-﻿using Domain;
-using GrpcClient.ServerConnection;
+﻿using GrpcClient.ServerConnection;
 using GrpcService;
+using RpcContracts.DatabaseMessages;
 
 namespace GrpcClient;
 
@@ -13,12 +13,12 @@ public class DatabaseRpcClient: IDatabaseService
         _server = serverConnection.CreateService();
     }
 
-    public IEnumerable<Database> GetDatabases()
+    public IEnumerable<DatabaseMessage> GetDatabases()
     {
         return _server.GetDatabases();
     }
 
-    public Database GetDatabase(string id)
+    public DatabaseMessage GetDatabase(string id)
     {
         return _server.GetDatabase(id);
     }

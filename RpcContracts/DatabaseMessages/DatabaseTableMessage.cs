@@ -1,6 +1,6 @@
 ﻿using ProtoBuf;
 
-namespace Domain;
+namespace RpcContracts.DatabaseMessages;
 
 [ProtoContract]
 public sealed class DatabaseTableMessage

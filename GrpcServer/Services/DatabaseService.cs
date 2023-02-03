@@ -1,5 +1,7 @@
-﻿using Domain;
-using FirebaseDatabase;
+﻿using FirebaseDatabase;
+using GrpcService;
+using RpcContracts.DatabaseMessages;
+using RpcContracts.Extensions;
 
 namespace GrpcServer.Services;
 
@@ -15,17 +17,13 @@ public class DatabaseService: IDatabaseService
         _databaseFactory = databaseFactory;
     }
 
-    public IEnumerable<Database> GetDatabases()
+    public IEnumerable<DatabaseMessage> GetDatabases()
     {
-        return _databaseFactory.GetAllDatabases();
+        return _databaseFactory.GetAllDatabases().Select(x=> x.ToMessage());
     }
-    public Database GetDatabase(string id)
+    public DatabaseMessage GetDatabase(string id)
     {
-        return LoadDatabase(id);
+        return _databaseFactory.GetDatabase(id).ToMessage();
     }
     
-    private Database LoadDatabase(string id)
-    {
-        return _databaseFactory.GetDatabase(id);
-    }
 }

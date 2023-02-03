@@ -1,6 +1,6 @@
 ﻿using Domain;
 using GrpcClient.ServerConnection;
-using GrpcServer;
+using GrpcService;
 
 namespace GrpcClient;
 

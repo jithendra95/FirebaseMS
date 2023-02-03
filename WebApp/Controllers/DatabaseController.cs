@@ -1,5 +1,5 @@
 ﻿using Domain;
-using GrpcServer;
+using GrpcService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers;

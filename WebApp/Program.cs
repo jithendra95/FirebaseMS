@@ -1,6 +1,6 @@
 using GrpcClient;
 using GrpcClient.ServerConnection;
-using GrpcServer;
+using GrpcService;
 
 var builder = WebApplication.CreateBuilder(args);
 

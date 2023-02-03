@@ -3,6 +3,7 @@ using FirebaseDatabase;
 using GrpcServer;
 using GrpcServer.Services;
 using GrpcServer.Extensions;
+using GrpcService;
 using ProtoBuf.Grpc.Server;
 
 namespace GrpcServer

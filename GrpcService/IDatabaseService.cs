@@ -1,13 +1,13 @@
 ﻿using System.ServiceModel;
-using Domain;
+using RpcContracts.DatabaseMessages;
 
-namespace GrpcServer;
+namespace GrpcService;
 [ServiceContract]
 public interface IDatabaseService
 {
     [OperationContract]
-    IEnumerable<Database> GetDatabases();
+    IEnumerable<DatabaseMessage> GetDatabases();
     
     [OperationContract]
-    Database GetDatabase(string id);
+    DatabaseMessage GetDatabase(string id);
 }

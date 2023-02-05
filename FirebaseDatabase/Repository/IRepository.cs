@@ -2,9 +2,9 @@
 
 public interface IRepository<T>
 {
-    bool Save(T value);
+    bool Save(T database);
 
     T Read(string id);
     
-    IEnumerable<T> ReadAll(string id);
+    IEnumerable<T> ReadAll();
 }

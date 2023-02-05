@@ -55,9 +55,14 @@ export class FetchData extends Component {
     const response = await fetch('weatherforecast');
     const data = await response.json();
     this.setState({ forecasts: data, loading: false });
+    
     const response2 = await fetch('database');
-    const data2 = await response.json();
+    const data2 = await response2.json(); 
+    
+    const response3 = await fetch(`database/${data2[0]?.id}`);
+    const data3 = await response3.json();
     
     console.log(JSON.stringify(data2));
+    console.log(JSON.stringify(data3));
   }
 }

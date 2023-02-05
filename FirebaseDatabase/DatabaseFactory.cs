@@ -5,10 +5,10 @@ namespace FirebaseDatabase;
 
 public class DatabaseFactory : IDatabaseFactory
 {
-    private readonly RealtimeDbApi _api;
-    private readonly DatabaseRepository _databaseRepository;
+    private readonly IDatabaseApi _api;
+    private readonly IRepository<Database> _databaseRepository;
 
-    public DatabaseFactory(RealtimeDbApi api, DatabaseRepository databaseRepository)
+    public DatabaseFactory(IDatabaseApi api, IRepository<Database> databaseRepository)
     {
         _api = api;
         _databaseRepository = databaseRepository;

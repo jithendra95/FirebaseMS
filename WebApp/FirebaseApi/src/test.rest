@@ -4,17 +4,17 @@ Accept: application/json
 ###
 
 ###
-POST http://localhost:5050/loadDatabases
+POST http://localhost:5050/loadDatabase
 Content-Type: application/json
 
-[
-    {
-      "id": 1,
-      "appName": "Money Easy Database",
-      "serviceAccountPath": "C:\\Users\\Jithendra.Thenuwara\\Downloads\\super-pass-64e2b-firebase-adminsdk-7zxq2-61f3d182fe.json",
-      "databaseUrl": "https://super-pass-64e2b-default-rtdb.europe-west1.firebasedatabase.app"
-    }
-]
+
+{
+  "Id": 1,
+  "DatabaseName": "Money Easy Database",
+  "ServiceAccountPath": "C:\\Users\\Jithendra.Thenuwara\\Downloads\\super-pass-64e2b-firebase-adminsdk-7zxq2-61f3d182fe.json",
+  "DatabaseUrl": "https://super-pass-64e2b-default-rtdb.europe-west1.firebasedatabase.app"
+}
+
 
 
 ###

@@ -1,5 +1,6 @@
 ﻿namespace Domain;
 
+
 public sealed class DatabaseTable : IDatabaseTable
 {
     public string Name { get; set; }

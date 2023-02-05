@@ -10,8 +10,10 @@ public static class DatabaseExtensions
         return new DatabaseMessage()
         {
             Id = database.Id,
+            DatabaseUrl = database.DatabaseUrl,
             PathToCredentials = database.PathToCredentials,
             DatabaseType = database.DatabaseType,
+            DatabaseName = database.DatabaseName,
             Tables = database.Tables.Select(ToMessage),
         };
     }

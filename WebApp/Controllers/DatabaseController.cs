@@ -18,6 +18,13 @@ public class DatabaseController  : ControllerBase
     }
     
     [HttpGet]
+    public IEnumerable<DatabaseMessage> GetAll()
+    {
+        return _databaseServer.GetDatabases();
+    } 
+    
+    [HttpGet]
+    [Route("{id}")]
     public DatabaseMessage Get(string id)
     {
         return _databaseServer.GetDatabase(id);

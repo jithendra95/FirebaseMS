@@ -9,8 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Connection\Connection.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
+      <ProjectReference Include="..\FirebaseMS.Utilities\FirebaseMS.Utilities.csproj" />
+      <ProjectReference Include="..\RpcContracts\RpcContracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>

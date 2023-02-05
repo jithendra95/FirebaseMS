@@ -12,8 +12,9 @@ app.get('/realtimeDb/:id', function (req, res) {
     res.end(JSON.stringify(RealtimeDatabaseController.GetTablesForDatabase(req.params.id)));
 })
 
-app.post('/loadDatabases', function (req, res) {
+app.post('/loadDatabase', function (req, res) {
     res.setHeader('content-type', 'application/json');
+    console.log(req.body)
     RealtimeDatabaseController.LoadDatabases(req.body);
     res.end("true");
 })

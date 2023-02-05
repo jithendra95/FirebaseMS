@@ -1,5 +1,6 @@
 ﻿namespace Domain;
 
+
 public class DatabaseTableRecord
 {
     public IEnumerable<DatabaseTableColumn> Columns { get; set; }

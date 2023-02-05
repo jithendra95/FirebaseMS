@@ -5,11 +5,9 @@ import {Table} from "./models";
 export class RealtimeDatabaseController {
     private static databases: { [key: string]: RealTimeDatabase } = {};
 
-    public static LoadDatabases(configs: { id: string, appName: string, serviceAccountPath: string, databaseUrl: string }[]) {
-        configs.forEach(config => {
-            if(!this.databases[config.id])
-                this.databases[config.id] = new RealTimeDatabase(config.serviceAccountPath, config.databaseUrl, config.appName);
-        })
+    public static LoadDatabases(config: { Id: string,  PathToCredentials: string, DatabaseUrl: string, DatabaseName: string, }) {
+        if (!this.databases[config.Id])
+            this.databases[config.Id] = new RealTimeDatabase(config.PathToCredentials, config.DatabaseUrl, config.DatabaseName);
 
     }
 

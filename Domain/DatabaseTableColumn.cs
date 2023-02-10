@@ -7,8 +7,7 @@ public class DatabaseTableColumn : IDatabaseTableColumn
     public ColumnDataType DataType { get; set; }
 
     public string Value { get; set; }
-
-
+    
     public DatabaseTableColumn(string name, ColumnDataType dataType, string value)
     {
         Name = name;

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {AddDatabaseDialog} from "./AddDatabaseDialog";
 
 
 export function Home() {
@@ -17,6 +18,7 @@ export function Home() {
             {databases.map(database=>{
                 return(<div key={database.id} >{database.databaseName}</div>)
             })}
+            <AddDatabaseDialog/>
         </div>
     );
 }

@@ -1,20 +1,15 @@
 ﻿namespace Domain;
 
-public class Database : IDatabase
+public abstract class Database : IDatabase
 {
     public string Id { get; }
-
     public string PathToCredentials { get; }
-
     public string DatabaseUrl { get; }
-
     public string DatabaseName { get; }
-
-    public DatabaseTypeEnum DatabaseType;
+    public DatabaseTypeEnum DatabaseType { get; }
     public IEnumerable<DatabaseTable> Tables { get; set; }
 
-
-    public Database(string id, string pathToCredentials, string databaseUrl, IEnumerable<DatabaseTable> tables,
+    protected Database(string id, string pathToCredentials, string databaseUrl, IEnumerable<DatabaseTable> tables,
         DatabaseTypeEnum databaseType, string databaseName)
     {
         Id = id;
@@ -28,6 +23,6 @@ public class Database : IDatabase
 
 public enum DatabaseTypeEnum
 {
-    realtimedb,
-    firestore
+    Realtimedb,
+    Firestore
 }

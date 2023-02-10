@@ -19,8 +19,8 @@ public class DatabaseFactory : IDatabaseFactory
         var database = _databaseRepository.Read(id);
         return database.DatabaseType switch
         {
-            DatabaseTypeEnum.realtimedb => _api.Read(database),
-            DatabaseTypeEnum.firestore => throw new NotImplementedException(),
+            DatabaseTypeEnum.Realtimedb => _api.Read(database),
+            DatabaseTypeEnum.Firestore => throw new NotImplementedException(),
             _ => throw new InvalidDataException()
         };
     }

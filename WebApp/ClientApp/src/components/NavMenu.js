@@ -1,7 +1,17 @@
-import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import './NavMenu.css';
+import {Collapse, Navbar, NavbarBrand, NavItem, NavLink} from "react-bootstrap";
+import * as PropTypes from "prop-types";
+
+function NavbarToggler(props) {
+  return null;
+}
+
+NavbarToggler.propTypes = {
+  onClick: PropTypes.func,
+  className: PropTypes.string
+};
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;

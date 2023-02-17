@@ -9,5 +9,6 @@ public sealed class DatabaseTableMessage
     [ProtoMember(2)] public string Path { get; set; }
     [ProtoMember(3)] public string ParentPath { get; set; }
     [ProtoMember(4)] public IEnumerable<DatabaseTableRecordMessage> Records { get; set; }
+    [ProtoMember(5)] public IEnumerable<DatabaseTableMessage> Tables { get; set; }
 
 }

@@ -25,6 +25,7 @@ public static class DatabaseExtensions
             Name = databaseTable.Name,
             Path = databaseTable.Path,
             Records = databaseTable.Records.Select(ToMessage),
+            Tables = databaseTable.Tables.Select(ToMessage),
             ParentPath = databaseTable.ParentPath
         };
     }

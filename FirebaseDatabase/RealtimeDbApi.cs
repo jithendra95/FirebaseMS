@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using Domain;
+using Domain.Extensions;
 
 namespace FirebaseDatabase;
 
@@ -37,7 +38,7 @@ public class RealtimeDbApi : IDatabaseApi
         {
             databaseTables = response.Content.ReadAsAsync<List<DatabaseTable>>().Result;
         }
-        database.Tables =  databaseTables;
+        database.Tables =  databaseTables.ToOriginalTree();
 
         return database;
     }

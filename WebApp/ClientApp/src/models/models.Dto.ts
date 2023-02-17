@@ -2,7 +2,8 @@
     name: string;
     path: string;
     parentPath?: string;
-    records: TableRecord[] = []
+    records: TableRecord[] = [];
+    tables: Table[] = []
 
     constructor(name: string, path: string) {
         this.name = name;

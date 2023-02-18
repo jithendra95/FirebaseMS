@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {AddDatabaseDialog} from "./AddDatabaseDialog";
 import {Col, Container, Row} from "react-bootstrap";
-import {DatabaseTree} from "./DatabaseTree";
-import {DatabaseTable} from "./DatabaseTable";
+import {NavigatorTree} from "./NavigatorTree";
+import {TreeNavigatorCollapsibleNode} from "./TreeNavigatorCollapsibleNode";
+import {DatabaseTableDto} from "../models/models.Dto";
+import {DatabaseTable} from "./DatabaseTable/DatabaseTable";
 
 
 export function Home() {
     const [databases, setDatabases] = useState([]);
     const [databaseTables, setDatabaseTables] = useState([]);
+    const [selectedTable, setSelectedTable] = useState<DatabaseTableDto>();
     const loadDatabaseData = async () => {
         const response = await fetch('database');
         const data = await response.json();
@@ -18,18 +20,24 @@ export function Home() {
         setDatabaseTables(data3.tables)
     }
 
+    const DatabaseTableSelected = (table: DatabaseTableDto) => {
+        setSelectedTable(table);
+    }
+
     useEffect(() => {
         loadDatabaseData();
     }, [])
+
+
     return (
         <div>
             <Container fluid>
                 <Row>
-                    <Col xs={4}>
-                        <DatabaseTree tables={databaseTables}/>
+                    <Col xs={2}>
+                        <NavigatorTree tables={databaseTables} NodeClicked={(e) => DatabaseTableSelected(e)}/>
                     </Col>
-                    <Col xs={4}>
-                        <DatabaseTable/>
+                    <Col xs={10}>
+                        {selectedTable && <DatabaseTable selectedTable={selectedTable}/>}
                     </Col>
                 </Row>
             </Container>

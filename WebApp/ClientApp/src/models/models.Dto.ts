@@ -1,9 +1,9 @@
-﻿export class Table {
+﻿export class DatabaseTableDto {
     name: string;
     path: string;
     parentPath?: string;
     records: TableRecord[] = [];
-    tables: Table[] = []
+    tables: DatabaseTableDto[] = []
 
     constructor(name: string, path: string) {
         this.name = name;

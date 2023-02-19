@@ -13,5 +13,5 @@ export class Table {
 }
 
 export class TableRecord {
-    values: {[key: string]: number} = {}
+    values: {[key: string]: string} = {}
 }

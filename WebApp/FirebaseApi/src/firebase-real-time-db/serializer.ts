@@ -21,14 +21,17 @@ export function DetectTables(currentNode: any, currentNodeKey: string, allTable:
         }else{
             let record = new TableRecord();
             let columnsIdentified = (parent?.columns && parent?.columns.length > 0);
-            if(!columnsIdentified)
+            if(!columnsIdentified){
                 parent?.columns.push("_id");
+            }
+            record.values["_id"] = currentNodeKey;
+            
             currentNodeKeys.map(key=>{
                 record.values[key] = currentNode[key];
-
-                if(!columnsIdentified)
-                    parent?.columns.push(key);
+            if(!columnsIdentified)
+                parent?.columns.push(key);
             })
+            
             parent?.records.push(record);
         }
     }

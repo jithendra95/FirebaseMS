@@ -3,6 +3,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {DatabaseTableDto} from "../models/models.Dto";
 import {DatabaseTable} from "./DatabaseTable/DatabaseTable";
 import {NavigatorTree} from "./TreeNavigator/NavigatorTree";
+import {HeaderMenu} from "./HeaderMenu/HeaderMenu";
 
 
 export function Home() {
@@ -32,13 +33,13 @@ export function Home() {
         <div>
             <Container fluid>
                 <Row>
-                    <div className='text-center p-10'>The HEADER Area</div>
+                    <HeaderMenu currentPath={selectedTable?.path}/>
                 </Row>
                 <Row>
-                    <Col xs={2}>
+                    <Col md={2}>
                         <NavigatorTree tables={databaseTables} selectedNode={selectedTable} NodeClicked={(e) => DatabaseTableSelected(e)}/>
                     </Col>
-                    <Col xs={10}>
+                    <Col md={10}>
                         {selectedTable && <DatabaseTable selectedTable={selectedTable}/>}
                     </Col>
                 </Row>

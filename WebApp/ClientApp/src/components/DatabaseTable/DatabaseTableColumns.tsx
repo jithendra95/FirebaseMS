@@ -1,17 +1,17 @@
-﻿import {TableColumn} from "../../models/models.Dto";
-import React from "react";
+﻿import React from "react";
+import Form from 'react-bootstrap/Form';
 
 export interface DatabaseTableColumnProps {
-    columns: TableColumn[]
+    columns: string[]
 }
 
 export const DatabaseTableColumns: React.FunctionComponent<DatabaseTableColumnProps> = ({columns}) => {
     return (
-        <tr>
-            {columns?.map((column, i) => {
-                return (<th key={i}> {column.name}</th>)
-            })}
-        </tr>
+            <tr>
+                <th><Form.Check type='checkbox'/></th>
+                {columns?.map((column, i) => {
+                    return (<th key={i}> {column}</th>)
+                })}
+            </tr>
     )
-
 }

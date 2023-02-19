@@ -1,4 +1,4 @@
-import {Table, TableColumn, TableRecord} from "./models";
+import {Table, TableRecord} from "./models";
 
 export function DetectTables(currentNode: any, currentNodeKey: string, allTable: Table[], path: string, parent?: Table) {
     // allTable.splice(0, allTable.length-1);
@@ -20,9 +20,14 @@ export function DetectTables(currentNode: any, currentNodeKey: string, allTable:
                 allTable.push(table);
         }else{
             let record = new TableRecord();
-            record.columns.push(new TableColumn("_id", currentNodeKey));
+            let columnsIdentified = (parent?.columns && parent?.columns.length > 0);
+            if(!columnsIdentified)
+                parent?.columns.push("_id");
             currentNodeKeys.map(key=>{
-                record.columns.push(new TableColumn(key, currentNode[key]));
+                record.values[key] = currentNode[key];
+
+                if(!columnsIdentified)
+                    parent?.columns.push(key);
             })
             parent?.records.push(record);
         }

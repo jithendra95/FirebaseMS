@@ -9,7 +9,7 @@ export const DatabaseTableRecord: React.FunctionComponent<DatabaseTableRecordPro
     return (
         <tr>
             {record?.columns.map((column, i) => {
-                return (<td key={i}>{column.value} </td>)
+                return (<td key={i} className='hover:bg-sky-100'>{column.value} </td>)
             })}
         </tr>
     )

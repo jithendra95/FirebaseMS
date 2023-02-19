@@ -1,5 +1,5 @@
-﻿using GrpcService;
-using ProtoBuf.Grpc.Client;
+﻿using ProtoBuf.Grpc.Client;
+using RpcContracts.Services;
 
 namespace GrpcClient.ServerConnection;
 

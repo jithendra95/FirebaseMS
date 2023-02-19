@@ -10,7 +10,7 @@ export interface NavigatorTreeProps {
 
 export const DatabaseTable: React.FunctionComponent<NavigatorTreeProps> = ({selectedTable}) => {
     return (
-        <Table striped bordered hover>
+        <Table bordered responsive>
             {selectedTable?.records !== null ?
                 (<>
                     <thead>

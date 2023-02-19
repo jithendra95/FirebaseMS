@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
-import {NavigatorTree} from "./NavigatorTree";
-import {TreeNavigatorCollapsibleNode} from "./TreeNavigatorCollapsibleNode";
 import {DatabaseTableDto} from "../models/models.Dto";
 import {DatabaseTable} from "./DatabaseTable/DatabaseTable";
+import {NavigatorTree} from "./TreeNavigator/NavigatorTree";
 
 
 export function Home() {
@@ -33,18 +32,17 @@ export function Home() {
         <div>
             <Container fluid>
                 <Row>
+                    <div className='text-center p-10'>The HEADER Area</div>
+                </Row>
+                <Row>
                     <Col xs={2}>
-                        <NavigatorTree tables={databaseTables} NodeClicked={(e) => DatabaseTableSelected(e)}/>
+                        <NavigatorTree tables={databaseTables} selectedNode={selectedTable} NodeClicked={(e) => DatabaseTableSelected(e)}/>
                     </Col>
                     <Col xs={10}>
                         {selectedTable && <DatabaseTable selectedTable={selectedTable}/>}
                     </Col>
                 </Row>
             </Container>
-            {/*{databases.map(database => {*/}
-            {/*    return (<div key={database.id}>{database.databaseName}</div>)*/}
-            {/*})}*/}
-            {/*<AddDatabaseDialog/>*/}
         </div>
     );
 }

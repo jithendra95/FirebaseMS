@@ -1,6 +1,6 @@
 ﻿using GrpcClient.ServerConnection;
-using GrpcService;
 using RpcContracts.DatabaseMessages;
+using RpcContracts.Services;
 
 namespace GrpcClient;
 

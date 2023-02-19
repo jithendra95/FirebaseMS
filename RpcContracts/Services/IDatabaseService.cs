@@ -1,7 +1,7 @@
 ﻿using System.ServiceModel;
 using RpcContracts.DatabaseMessages;
 
-namespace GrpcService;
+namespace RpcContracts.Services;
 [ServiceContract]
 public interface IDatabaseService
 {

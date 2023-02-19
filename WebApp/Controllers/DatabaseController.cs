@@ -1,6 +1,6 @@
-﻿using GrpcService;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RpcContracts.DatabaseMessages;
+using RpcContracts.Services;
 
 namespace WebApp.Controllers;
 

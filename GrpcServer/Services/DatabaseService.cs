@@ -2,6 +2,7 @@
 using GrpcService;
 using RpcContracts.DatabaseMessages;
 using RpcContracts.Extensions;
+using RpcContracts.Services;
 
 namespace GrpcServer.Services;
 

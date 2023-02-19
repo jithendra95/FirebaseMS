@@ -34,7 +34,7 @@ public static class DatabaseExtensions
     {
         return new DatabaseTableRecordMessage()
         {
-            Columns = databaseTableRecord.Columns.Select(ToMessage)
+            Values = databaseTableRecord.Values
         };
     }
 

@@ -2,10 +2,10 @@
 
 public class DatabaseTableRecord
 {
-    public IEnumerable<DatabaseTableColumn> Columns { get; set; }
-    
-    public DatabaseTableRecord(IEnumerable<DatabaseTableColumn> columns)
+    public Dictionary<string, string> Values { get; set; }
+
+    public DatabaseTableRecord(Dictionary<string, string> values)
     {
-        Columns = columns;
+        Values = values;
     }
 }

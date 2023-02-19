@@ -583,9 +583,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\GrpcClient\GrpcClient.csproj" />
-      <ProjectReference Include="..\GrpcService\GrpcService.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -594,10 +592,6 @@
 
     <ItemGroup>
       <EmbeddedResource Remove="firebase-api\node_modules\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="ClientApp\src\components\TreeNavigator" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

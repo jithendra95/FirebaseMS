@@ -8,6 +8,7 @@ using GrpcServer.Services;
 using GrpcServer.Extensions;
 using GrpcService;
 using ProtoBuf.Grpc.Server;
+using RpcContracts.Services;
 
 namespace GrpcServer
 {

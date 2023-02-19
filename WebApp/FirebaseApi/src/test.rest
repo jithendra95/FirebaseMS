@@ -9,10 +9,13 @@ Content-Type: application/json
 
 
 {
-  "Id": 1,
-  "DatabaseName": "Money Easy Database",
-  "ServiceAccountPath": "C:\\Users\\Jithendra.Thenuwara\\Downloads\\super-pass-64e2b-firebase-adminsdk-7zxq2-61f3d182fe.json",
-  "DatabaseUrl": "https://super-pass-64e2b-default-rtdb.europe-west1.firebasedatabase.app"
+  "DatabaseType": 0,
+  "Id": "1",
+  "PathToCredentials": "C:\\Users\\Jithendra.Thenuwara\\Downloads\\super-pass-64e2b-firebase-adminsdk-7zxq2-61f3d182fe.json",
+  "DatabaseUrl": "https://super-pass-64e2b-default-rtdb.europe-west1.firebasedatabase.app",
+  "DatabaseName": "Money Easy DB",
+  "Tables": []
+
 }
 
 

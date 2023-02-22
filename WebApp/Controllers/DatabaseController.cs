@@ -6,7 +6,7 @@ namespace WebApp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DatabaseController  : ControllerBase
+public class DatabaseController : ControllerBase
 {
     private readonly ILogger<DatabaseController> _logger;
     private readonly IDatabaseService _databaseServer;
@@ -16,17 +16,25 @@ public class DatabaseController  : ControllerBase
         _logger = logger;
         _databaseServer = databaseServer;
     }
-    
+
     [HttpGet]
     public IEnumerable<DatabaseMessage> GetAll()
     {
         return _databaseServer.GetDatabases();
-    } 
-    
+    }
+
     [HttpGet]
     [Route("{id}")]
     public DatabaseMessage Get(string id)
     {
         return _databaseServer.GetDatabase(id);
+    }
+
+    [HttpGet]
+    [Route("{databaseId}/{id}")]
+    public DatabaseTableMessage GetDatabaseTable(string databaseId, string id)
+    {
+        var message = new DatabaseTableMessage { Path = id, DatabaseId = databaseId };
+        return _databaseServer.GetDatabaseTable(message);
     }
 }

@@ -15,7 +15,6 @@ export const TreeNavigatorCollapsibleNode: React.FunctionComponent<TreeNavigator
     const [collapsed, setCollapsed] = useState(true)
 
     const NodeClickHandler = (table: DatabaseTableDto) => {
-        if(table.records !== null && table.records.length > 0)
             NodeClicked(table);
     }
     

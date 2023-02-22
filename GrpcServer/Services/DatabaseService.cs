@@ -1,30 +1,34 @@
 ﻿using FirebaseDatabase;
-using GrpcService;
 using RpcContracts.DatabaseMessages;
 using RpcContracts.Extensions;
 using RpcContracts.Services;
 
 namespace GrpcServer.Services;
 
-public class DatabaseService: IDatabaseService
+public class DatabaseService : IDatabaseService
 {
     private readonly ILogger<DatabaseService> _logger;
-    private readonly IDatabaseFactory _databaseFactory;
+    private readonly IDatabaseRepository _databaseRepository;
 
 
-    public DatabaseService(ILogger<DatabaseService> logger, IDatabaseFactory databaseFactory)
+    public DatabaseService(ILogger<DatabaseService> logger, IDatabaseRepository databaseRepository)
     {
         _logger = logger;
-        _databaseFactory = databaseFactory;
+        _databaseRepository = databaseRepository;
     }
 
     public IEnumerable<DatabaseMessage> GetDatabases()
     {
-        return _databaseFactory.GetAllDatabases().Select(x=> x.ToMessage());
+        return _databaseRepository.GetAllDatabases().Select(x => x.ToMessage());
     }
+
     public DatabaseMessage GetDatabase(string id)
     {
-        return _databaseFactory.GetDatabase(id).ToMessage();
+        return _databaseRepository.GetDatabase(id).ToMessage();
     }
-    
+
+    public DatabaseTableMessage GetDatabaseTable(DatabaseTableMessage message)
+    {
+        return _databaseRepository.GetDatabase(message.DatabaseId).GetTable(message.Path).ToMessage(true);
+    }
 }

@@ -3,20 +3,20 @@ using FirebaseDatabase.Repository;
 
 namespace FirebaseDatabase;
 
-public class DatabaseFactory : IDatabaseFactory
+public class DatabaseRepository : IDatabaseRepository
 {
     private readonly IDatabaseApi _api;
-    private readonly IRepository<Database> _databaseRepository;
+    private readonly IRepository<Database> _databaseStorageRepository;
 
-    public DatabaseFactory(IDatabaseApi api, IRepository<Database> databaseRepository)
+    public DatabaseRepository(IDatabaseApi api, IRepository<Database> databaseStorageRepository)
     {
         _api = api;
-        _databaseRepository = databaseRepository;
+        _databaseStorageRepository = databaseStorageRepository;
     }
 
     public Database GetDatabase(string id)
     {
-        var database = _databaseRepository.Read(id);
+        var database = _databaseStorageRepository.Read(id);
         return database.DatabaseType switch
         {
             DatabaseTypeEnum.Realtimedb => _api.Read(database),
@@ -27,6 +27,6 @@ public class DatabaseFactory : IDatabaseFactory
 
     public IEnumerable<Database> GetAllDatabases()
     {
-        return _databaseRepository.ReadAll();
+        return _databaseStorageRepository.ReadAll();
     }
 }

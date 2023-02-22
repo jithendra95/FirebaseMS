@@ -22,4 +22,9 @@ public class DatabaseRpcClient: IDatabaseService
     {
         return _server.GetDatabase(id);
     }
+
+    public DatabaseTableMessage GetDatabaseTable(DatabaseTableMessage message)
+    {
+        return _server.GetDatabaseTable(message);
+    }
 }

@@ -14,19 +14,21 @@ public static class DatabaseExtensions
             PathToCredentials = database.PathToCredentials,
             DatabaseType = database.DatabaseType,
             DatabaseName = database.DatabaseName,
-            Tables = database.Tables.Select(ToMessage),
+            Tables = database.Tables.Select(x => ToMessage(x, false)),
         };
     }
 
-    private static DatabaseTableMessage ToMessage(this DatabaseTable databaseTable)
+    public static DatabaseTableMessage ToMessage(this DatabaseTable databaseTable, bool attachRecords)
     {
         return new DatabaseTableMessage()
         {
             Name = databaseTable.Name,
             Path = databaseTable.Path,
-            Records = databaseTable.Records.Select(ToMessage),
-            Tables = databaseTable.Tables.Select(ToMessage),
-            Columns = databaseTable.Columns.Select(column=> column),
+            Records = attachRecords ? databaseTable.Records.Select(ToMessage) : new List<DatabaseTableRecordMessage>(),
+            Tables = databaseTable.Tables != null
+                ? databaseTable.Tables.Select(x => ToMessage(x, attachRecords))
+                : new List<DatabaseTableMessage>(),
+            Columns = databaseTable.Columns.Select(column => column),
             ParentPath = databaseTable.ParentPath
         };
     }

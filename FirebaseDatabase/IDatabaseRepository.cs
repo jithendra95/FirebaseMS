@@ -3,9 +3,8 @@ using FirebaseDatabase.Repository;
 
 namespace FirebaseDatabase;
 
-public interface IDatabaseFactory
+public interface IDatabaseRepository
 {
     public Database GetDatabase(string id);
-    
     public IEnumerable<Database> GetAllDatabases();
 }

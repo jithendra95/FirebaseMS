@@ -29,7 +29,7 @@ namespace GrpcServer
             services.AddScoped<IStorage<IEnumerable<Database>>, FileStorage<IEnumerable<Database>>>();
             services.AddScoped<IRepository<Database>,DatabaseFileRepository>();
             
-            services.AddScoped<IDatabaseFactory, DatabaseFactory>();
+            services.AddScoped<IDatabaseRepository, DatabaseRepository>();
             services.AddSingleton<IDatabaseService, DatabaseService>();
         }
 

@@ -11,5 +11,7 @@ public sealed class DatabaseTableMessage
     [ProtoMember(4)] public IEnumerable<DatabaseTableRecordMessage> Records { get; set; }
     [ProtoMember(5)] public IEnumerable<DatabaseTableMessage> Tables { get; set; }
     [ProtoMember(6)] public IEnumerable<string> Columns { get; set; }
+    
+    [ProtoMember(7)] public string DatabaseId { get; set; }
 
 }

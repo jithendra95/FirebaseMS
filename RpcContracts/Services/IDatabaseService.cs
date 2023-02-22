@@ -10,4 +10,7 @@ public interface IDatabaseService
     
     [OperationContract]
     DatabaseMessage GetDatabase(string id);
+
+    [OperationContract]
+    DatabaseTableMessage GetDatabaseTable(DatabaseTableMessage message);
 }

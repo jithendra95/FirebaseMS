@@ -2,7 +2,7 @@
 
 public static class DatabaseTableExtensions
 {
-    public static IEnumerable<DatabaseTable> ToOriginalTree(this IReadOnlyCollection<DatabaseTable> databaseTables)
+    public static IEnumerable<DatabaseTable> ToOriginalTree(this IEnumerable<DatabaseTable> databaseTables)
     {
 
         var rootTables =
@@ -18,7 +18,7 @@ public static class DatabaseTableExtensions
     }
 
     private static void AllocateChildTables(DatabaseTable table,
-        IReadOnlyCollection<DatabaseTable> databaseTables)
+        IEnumerable<DatabaseTable> databaseTables)
     {
         var childTables = databaseTables.Where(databaseTable => databaseTable.ParentPath == table.Path).ToList();
         table.Tables = childTables;

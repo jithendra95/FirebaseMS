@@ -1,4 +1,11 @@
-﻿export class DatabaseTableDto {
+﻿
+export interface DatabaseDto{
+    id: string;
+    pathToCredentials: string;
+    databaseUrl: string;
+    databaseName: string;
+}
+export class DatabaseTableDto {
     name: string;
     path: string;
     parentPath?: string;

@@ -7,9 +7,10 @@ const app = express();
 app.use(bodyParser.json())
 
 
-app.get('/realtimeDb/:id', function (req, res) {
+app.get('/realtimeDb/:id', async function (req, res) {
     res.setHeader('content-type', 'application/json');
-    res.end(JSON.stringify(RealtimeDatabaseController.GetTablesForDatabase(req.params.id)));
+    let tables = await RealtimeDatabaseController.GetTablesForDatabase(req.params.id);
+    res.end(JSON.stringify(tables));
 })
 
 app.post('/loadDatabase', function (req, res) {
@@ -21,5 +22,4 @@ app.post('/loadDatabase', function (req, res) {
 const port = process.env.PORT || 5050;
 app.listen(port, ()=> {
     console.log("Application started");
-    // loadDatabase();
 });

@@ -2,22 +2,20 @@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {Col, Container, Row, Form} from "react-bootstrap";
+import {NavigatorTreeProps} from "./TreeNavigator/NavigatorTree";
 
-export function AddDatabaseDialog() {
-
-    const [show, setShow] = useState(false);
+export interface AddDatabaseDialogProps 
+{
+    showDialog: boolean,
+    handleDialogInteraction: ()=> void
+}
+export const AddDatabaseDialog: React.FunctionComponent<AddDatabaseDialogProps> =
+    ({showDialog, handleDialogInteraction}) => {
+    
     const [database, setDatabase] = useState("firestore");
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-            </Button>
-
-            <Modal size="lg" show={show} centered onHide={handleClose}>
+            <Modal size="lg" show={showDialog} centered onHide={handleDialogInteraction}>
                 <Modal.Header closeButton>
                     <Modal.Title>Connect to Database</Modal.Title>
                 </Modal.Header>

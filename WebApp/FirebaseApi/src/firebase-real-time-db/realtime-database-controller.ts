@@ -11,7 +11,7 @@ export class RealtimeDatabaseController {
 
     }
 
-    public static GetTablesForDatabase(id: string): Table[] {
+    public static async GetTablesForDatabase(id: string): Promise<Table[]> {
         return this.databases[id]?.GetTables();
     }
 

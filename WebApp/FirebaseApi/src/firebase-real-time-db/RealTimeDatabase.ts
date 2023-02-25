@@ -8,30 +8,21 @@ export class RealTimeDatabase {
     private serviceAccount: string;
     private databaseUrl: string;
     private allTables: Table[] = [];
-    
+    private readonly app;
     constructor(serviceAccountPath: string, databaseUrl: string, appName: string) {
         this.serviceAccount = serviceAccountPath;
         this.databaseUrl = databaseUrl
-        const app = firebaseApp(serviceAccountPath, databaseUrl, appName);
-        const db = database(app);
-        const ref = db.ref('/');
-        let root: object;
-        
-        ref.on("value", (snapshot) => {
-            root = snapshot.val();
-            this.LoadTables(root);
-            console.log('The read success');
-        }, (errorObject) => {
-            console.log('The read failed: ' + errorObject.name);
-        });
-    }
-
-    private LoadTables(root: object): void{
-        DetectTables(root, "",this.allTables, "");
+        this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
     }
     
-    public GetTables(): Table[]{
-        return this.allTables;
+    public async GetTables(): Promise<Table[]>{
+        const db = database(this.app);
+        const ref = db.ref('/');
+
+        let snapshot = await ref.once("value");
+        let root = snapshot.val();
+        DetectTables(root, "",this.allTables, "");
+        return Promise.resolve(this.allTables);
     }
 }
 

@@ -21,6 +21,7 @@ export class RealTimeDatabase {
 
         let snapshot = await ref.once("value");
         let root = snapshot.val();
+        this.allTables = []
         DetectTables(root, "",this.allTables, "");
         return Promise.resolve(this.allTables);
     }

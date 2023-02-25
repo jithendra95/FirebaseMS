@@ -16,8 +16,6 @@ export function Home() {
     const [key, setKey] = useState('1');
     
     const loadDatabaseData = async () => {
-
-
         const response3 = await fetch(`database/1`);
         const data3 = await response3.json();
 

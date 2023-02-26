@@ -22,3 +22,14 @@ export class DatabaseTableDto {
 export class TableRecord {
     values: {[key: string]: string} = {}
 }
+
+export enum DataBaseTypeEnum{
+    firestore,
+    realtimeDb
+}
+
+export interface DatabaseCredentials{
+    filePath: string;
+    databaseType: DataBaseTypeEnum
+    databaseUrl: string;
+}

@@ -1,7 +1,6 @@
 ﻿using Domain;
+using FirebaseDatabase.Utilities;
 using FirebaseMS.Utilities;
-using Newtonsoft.Json;
-using RpcContracts.Extensions;
 
 namespace FirebaseDatabase.Repository;
 
@@ -14,8 +13,7 @@ public class DatabaseFileRepository : IRepository<Database>
 
     public DatabaseFileRepository(IStorage<IEnumerable<Database>> storage)
     {
-        var programDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-        var folderPath = Path.Combine(programDataFolder, "FirebaseMS");
+        var folderPath = FileStorageUtil.GetDefaultFolderLocation();
         Directory.CreateDirectory(folderPath);
 
         _filePath = Path.Combine(folderPath, "database.txt");

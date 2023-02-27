@@ -33,6 +33,6 @@ public class Database : IDatabase
 
 public enum DatabaseTypeEnum
 {
-    Realtimedb,
-    Firestore
+    Firestore,
+    Realtimedb
 }

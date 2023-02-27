@@ -2,6 +2,7 @@
 import Modal from 'react-bootstrap/Modal';
 import {Col, Container, Form, Row} from "react-bootstrap";
 import {DatabaseCredentials, DatabaseDto, DataBaseTypeEnum} from "../models/models.Dto";
+import axios from "axios";
 
 export interface AddDatabaseDialogProps {
     showDialog: boolean,
@@ -26,14 +27,28 @@ export const AddDatabaseDialog: React.FunctionComponent<AddDatabaseDialogProps> 
             inputFile.current?.click();
         };
 
-        const onChangeFile = (event: ChangeEvent<HTMLInputElement>)=> {
+        const onChangeFile = async (event: ChangeEvent<HTMLInputElement>)=> {
             event.stopPropagation();
             event.preventDefault();
-            let file = event.target.files ?? []
-            console.log(file);
+            let files = event.target.files ?? []
+            console.log(files);
+            await uploadFile(files[0])
             
             // databaseCredentials.filePath = file.
             // this.setState({file}); /// if you want to upload latter
+        }
+        
+        const uploadFile = async (file: File)=>{
+            const formData = new FormData();
+            formData.append('file', file)
+            formData.append('databaseUrl',"-")
+            formData.append('databaseType',  databaseCredentials.databaseType.toString())
+            await axios.post('database', formData)
+                .then(res => {
+                    console.log(res)
+                }).catch(err => {
+                    console.error(err);
+                });
         }
 
         const loadDatabaseData = async () => {

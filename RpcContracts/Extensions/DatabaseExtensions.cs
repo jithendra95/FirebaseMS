@@ -18,6 +18,18 @@ public static class DatabaseExtensions
         };
     }
 
+    public static Database ToDatabase(this DatabaseMessage database)
+    {
+        return new Database(
+            database.Id,
+            database.PathToCredentials,
+            database.DatabaseUrl,
+            new List<DatabaseTable>(),
+            database.DatabaseType,
+            database.DatabaseName
+        );
+    }
+
     public static DatabaseTableMessage ToMessage(this DatabaseTable databaseTable, bool attachRecords)
     {
         return new DatabaseTableMessage()

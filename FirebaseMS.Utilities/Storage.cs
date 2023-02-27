@@ -10,7 +10,7 @@ public class FileStorage<T>: IStorage<T>
         try
         {
             var contentsToWriteToFile = JsonConvert.SerializeObject(objectToSave);
-            writer = new StreamWriter(filePath, true);
+            writer = new StreamWriter(filePath, append);
             writer.Write(contentsToWriteToFile);
         }
         finally

@@ -19,16 +19,55 @@ public class DatabaseService : IDatabaseService
 
     public IEnumerable<DatabaseMessage> GetDatabases()
     {
-        return _databaseRepository.GetAllDatabases().Select(x => x.ToMessage());
+        try
+        {
+            return _databaseRepository.GetAllDatabases().Select(x => x.ToMessage());
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return new List<DatabaseMessage>();
+        }
     }
 
     public DatabaseMessage GetDatabase(string id)
     {
-        return _databaseRepository.GetDatabase(id).ToMessage();
+        try
+        {
+            return _databaseRepository.GetDatabase(id).ToMessage();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            throw;
+        }
     }
 
     public DatabaseTableMessage GetDatabaseTable(DatabaseTableMessage message)
     {
-        return _databaseRepository.GetDatabase(message.DatabaseId).GetTable(message.Path).ToMessage(true);
+        try
+        {
+            return _databaseRepository.GetDatabase(message.DatabaseId).GetTable(message.Path).ToMessage(true);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            throw;
+        }
+    }
+
+    public DatabaseMessage CreateDatabase(DatabaseCreateMessage databaseCreateMessage)
+    {
+        try
+        {
+            return _databaseRepository.CreateDatabase(databaseCreateMessage.DatabaseUrl,
+                databaseCreateMessage.DatabaseType,
+                databaseCreateMessage.FileName, databaseCreateMessage.FileBase64).ToMessage();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            throw;
+        }
     }
 }

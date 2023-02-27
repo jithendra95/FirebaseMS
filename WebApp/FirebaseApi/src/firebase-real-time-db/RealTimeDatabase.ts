@@ -11,19 +11,29 @@ export class RealTimeDatabase {
     private readonly app;
     constructor(serviceAccountPath: string, databaseUrl: string, appName: string) {
         this.serviceAccount = serviceAccountPath;
-        this.databaseUrl = databaseUrl
-        this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
+        this.databaseUrl = databaseUrl;
+        try{
+            this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
+        }catch{
+            this.app = undefined;
+        }
+        
     }
     
     public async GetTables(): Promise<Table[]>{
-        const db = database(this.app);
-        const ref = db.ref('/');
+        if(this.app){
+            const db = database(this.app);
+            const ref = db.ref('/');
 
-        let snapshot = await ref.once("value");
-        let root = snapshot.val();
-        this.allTables = []
-        DetectTables(root, "",this.allTables, "");
-        return Promise.resolve(this.allTables);
+            let snapshot = await ref.once("value");
+            let root = snapshot.val();
+            this.allTables = []
+            DetectTables(root, "",this.allTables, "");
+            return Promise.resolve(this.allTables); 
+        }else{
+            return Promise.resolve([]);
+        }
+        
     }
 }
 

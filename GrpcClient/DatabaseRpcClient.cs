@@ -27,4 +27,9 @@ public class DatabaseRpcClient: IDatabaseService
     {
         return _server.GetDatabaseTable(message);
     }
+
+    public DatabaseMessage CreateDatabase(DatabaseCreateMessage databaseCreateMessage)
+    {
+        return _server.CreateDatabase(databaseCreateMessage);
+    }
 }

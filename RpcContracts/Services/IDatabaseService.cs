@@ -13,4 +13,7 @@ public interface IDatabaseService
 
     [OperationContract]
     DatabaseTableMessage GetDatabaseTable(DatabaseTableMessage message);
+    
+    [OperationContract]
+    DatabaseMessage CreateDatabase(DatabaseCreateMessage databaseCreateMessage);
 }

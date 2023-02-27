@@ -26,10 +26,10 @@ export const DatabasePage: React.FunctionComponent<DatabasePageProps> = ({databa
     }
 
     const loadDatabaseData = async () => {
-        const response3 = await fetch(`database/${database.id}`);
-        const data3 = await response3.json();
-        if(data3.tables !== null)
-            setDatabaseTables(data3.tables)
+        const response = await fetch(`database/${database.id}`);
+        const data = await response.json(); 
+        if(data.tables !== null)
+            setDatabaseTables(data.tables)
     }
     
     useEffect(() => {

@@ -17,10 +17,21 @@ export const Home = () => {
     const ConnectDatabase = (database: DatabaseDto) => {
         let newConnectedDatabases = [...connectedDatabases]
         newConnectedDatabases.push(database)
+        localStorage.setItem("ConnectedDatabases", JSON.stringify(newConnectedDatabases))
         setConnectedDatabases(newConnectedDatabases);
         ShowAddDialog();
         SetSelectedDatabase(newConnectedDatabases)
 
+    }
+    const LoadConnectedDatabases = ()=>{
+        let connectedDatabasesString = localStorage.getItem("ConnectedDatabases")
+        if(connectedDatabasesString !== null){
+            let connectedDatabases  = JSON.parse(connectedDatabasesString)
+            setConnectedDatabases(connectedDatabases)
+            SetSelectedDatabase(connectedDatabases)
+        }else{
+            ShowAddDialog()
+        }
     }
 
     const SetSelectedDatabase = (connectedDatabases: DatabaseDto[]) => {
@@ -29,11 +40,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        if (connectedDatabases.length === 0) {
-            ShowAddDialog()
-        } else {
-            SetSelectedDatabase(connectedDatabases);
-        }
+        LoadConnectedDatabases()
     }, [])
 
     return (

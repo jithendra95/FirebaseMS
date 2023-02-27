@@ -8,7 +8,7 @@ public class RealtimeDbApi : IDatabaseApi
 {
     private readonly HttpClient _client;
     private readonly string _path;
-    private Dictionary<string, bool> hasDatabaseLoaded;
+    private readonly Dictionary<string, bool> hasDatabaseLoaded;
     private readonly string _loadPath;
 
     public RealtimeDbApi()

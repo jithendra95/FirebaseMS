@@ -13,7 +13,8 @@ export interface AddDatabaseDialogProps {
 export const AddDatabaseDialog: React.FunctionComponent<AddDatabaseDialogProps> =
     ({showDialog, connectDatabase, handleDialogInteraction}) => {
 
-        const [databases, setDatabases] = useState<DatabaseDto[]>([])
+        const [databases, setDatabases] = useState<DatabaseDto[]>([]);
+        const [uploadError, setUploadError] = useState("");
         const [databaseCredentials, setDatabaseCredentials] = useState<DatabaseCredentials>({
             databaseUrl: "",
             databaseType: DataBaseTypeEnum.firestore,
@@ -31,11 +32,13 @@ export const AddDatabaseDialog: React.FunctionComponent<AddDatabaseDialogProps> 
             event.stopPropagation();
             event.preventDefault();
             let files = event.target.files ?? []
+            let file = files[0];
             console.log(files);
-            await uploadFile(files[0])
-            
-            // databaseCredentials.filePath = file.
-            // this.setState({file}); /// if you want to upload latter
+            if(file.type === 'application/json'){
+                await uploadFile(files[0])
+            }else{
+                setUploadError("Invalid File type, File should be json");
+            }
         }
         
         const uploadFile = async (file: File)=>{
@@ -45,16 +48,16 @@ export const AddDatabaseDialog: React.FunctionComponent<AddDatabaseDialogProps> 
             formData.append('databaseType',  databaseCredentials.databaseType.toString())
             await axios.post('database', formData)
                 .then(res => {
-                    console.log(res)
+                    connectDatabase(res.data as DatabaseDto);
                 }).catch(err => {
-                    console.error(err);
+                    setUploadError(`Error Uploading file: ${err}`);
                 });
         }
 
         const loadDatabaseData = async () => {
             const response = await fetch(`database`);
             const data = await response.json();
-            setDatabases(data)
+            setDatabases(data);
         }
         
         useEffect(() => {
@@ -107,6 +110,7 @@ export const AddDatabaseDialog: React.FunctionComponent<AddDatabaseDialogProps> 
                                 </Col>
                             </Row>
                             <input type='file' id='file' ref={inputFile} onChange={(e)=> onChangeFile(e)} style={{display: 'none'}}/>
+                            {uploadError!== "" ? <div className='text-red-500 text-xs pb-2'>{uploadError}</div>: []}
                             <hr/>
 
                             {databases.map((db, i) => {

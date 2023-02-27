@@ -2,6 +2,7 @@
 using Domain;
 using FirebaseDatabase.Repository;
 using FirebaseDatabase.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace FirebaseDatabase;
 
@@ -9,11 +10,13 @@ public class DatabaseRepository : IDatabaseRepository
 {
     private readonly IDatabaseApi _api;
     private readonly IRepository<Database> _databaseStorageRepository;
+    private readonly ILogger<DatabaseRepository> _logger;
 
-    public DatabaseRepository(IDatabaseApi api, IRepository<Database> databaseStorageRepository)
+    public DatabaseRepository(IDatabaseApi api, IRepository<Database> databaseStorageRepository,ILogger<DatabaseRepository> logger)
     {
         _api = api;
         _databaseStorageRepository = databaseStorageRepository;
+        _logger = logger;
     }
 
     public Database CreateDatabase(string databaseUrl, DatabaseTypeEnum databaseType, string fileName,
@@ -22,9 +25,10 @@ public class DatabaseRepository : IDatabaseRepository
         var filePath = Path.Combine(FileStorageUtil.GetDefaultFolderLocation(), fileName);
         File.WriteAllBytes(filePath, Convert.FromBase64String(base64File));
 
-        var id = $"{fileName}_{Guid.NewGuid():N}";
+        var id = $"{Guid.NewGuid():N}";
+        var databaseName = fileName.Split("-firebase")[0];
         var newDatabase = new Database(id, filePath, databaseUrl, new List<DatabaseTable>(), databaseType,
-            fileName);
+            databaseName);
         if (_databaseStorageRepository.Save(newDatabase))
         {
             return newDatabase;
@@ -45,8 +49,9 @@ public class DatabaseRepository : IDatabaseRepository
                 _ => throw new InvalidDataException()
             };
         }
-        catch
+        catch (NotImplementedException e)
         {
+            _logger.LogError(e.ToString());
             return database;
         }
     }

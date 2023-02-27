@@ -19,7 +19,7 @@ public class DatabaseController : ControllerBase
     }
 
     [HttpPost]
-    public DatabaseMessage? CreateDatabase([FromForm] IFormFile file, [FromForm] string databaseUrl, [FromForm] int databaseType)
+    public DatabaseMessage CreateDatabase([FromForm] IFormFile file, [FromForm] string databaseUrl, [FromForm] int databaseType)
     {
         var fileBase64 = string.Empty;
         if (file.Length > 0)

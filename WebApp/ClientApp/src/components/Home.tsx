@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {DatabaseDto} from "../models/models.Dto";
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 import {AddDatabaseDialog} from "./AddDatabaseDialog";
 import {DatabasePage} from "./DatabasePage";
+import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import {TabPane} from "react-bootstrap";
 
 export const Home = () => {
     const [showAddDialog, setShowAddDialog] = useState(false);
@@ -17,26 +18,36 @@ export const Home = () => {
     const ConnectDatabase = (database: DatabaseDto) => {
         let newConnectedDatabases = [...connectedDatabases]
         newConnectedDatabases.push(database)
-        localStorage.setItem("ConnectedDatabases", JSON.stringify(newConnectedDatabases))
-        setConnectedDatabases(newConnectedDatabases);
+        SetConnectedDatabases(newConnectedDatabases);
         ShowAddDialog();
-        SetSelectedDatabase(newConnectedDatabases)
 
     }
-    const LoadConnectedDatabases = ()=>{
+    const LoadConnectedDatabases = () => {
         let connectedDatabasesString = localStorage.getItem("ConnectedDatabases")
-        if(connectedDatabasesString !== null){
-            let connectedDatabases  = JSON.parse(connectedDatabasesString)
+        if (connectedDatabasesString !== null) {
+            let connectedDatabases = JSON.parse(connectedDatabasesString)
             setConnectedDatabases(connectedDatabases)
             SetSelectedDatabase(connectedDatabases)
-        }else{
+        } else {
             ShowAddDialog()
         }
     }
 
+    const CloseTab = (index: number) => {
+        let newConnectedDatabases = [...connectedDatabases]
+        newConnectedDatabases.splice(index, 1);
+        SetConnectedDatabases(newConnectedDatabases);
+    }
+
+    const SetConnectedDatabases = (newConnectedDatabases: DatabaseDto[]) => {
+        localStorage.setItem("ConnectedDatabases", JSON.stringify(newConnectedDatabases))
+        setConnectedDatabases(newConnectedDatabases);
+        SetSelectedDatabase(newConnectedDatabases)
+    }
+
     const SetSelectedDatabase = (connectedDatabases: DatabaseDto[]) => {
         let length = connectedDatabases.length
-        setKey(length > 0 ? `${length - 1}` : 'Add')
+        setKey(length > 0 ? `${length - 2}` : 'Add')
     }
 
     useEffect(() => {
@@ -45,19 +56,28 @@ export const Home = () => {
 
     return (
         <>
-            <Tabs
-                activeKey={key}
-                onSelect={(k) => k === 'Add' ? ShowAddDialog() : setKey(k!)
-                }
-                className="mb-3"
-            >
+            <Tabs className="mb-3">
+                <TabList>
+                    {connectedDatabases.map((database, i) => {
+                        return (
+                            <Tab key={i}>
+                                {database?.databaseName} <span className='hover: text-red-500 text-sm p-2'
+                                                               onClick={() => CloseTab(i)}>&#10005;</span>
+                            </Tab>)
+                    })}
+                    <Tab disabled onClick={() => ShowAddDialog()}>Add</Tab>
+                </TabList>
+
+
                 {connectedDatabases.map((database, i) => {
                     return (
-                        <Tab eventKey={i} key={i} title={database?.databaseName}>
-                            <DatabasePage database={database}/>
-                        </Tab>)
+                        <TabPanel key={i}>
+                            {database?.databaseName} <DatabasePage database={database}/>
+                        </TabPanel>)
                 })}
-                <Tab title="Add" eventKey="Add"></Tab>
+                <TabPanel></TabPanel>
+
+
             </Tabs>
 
             <AddDatabaseDialog showDialog={showAddDialog} connectDatabase={ConnectDatabase}

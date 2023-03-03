@@ -1,5 +1,6 @@
 import express = require("express");
-import {RealtimeDatabaseController} from "./firebase-real-time-db/realtime-database-controller";
+import {RealtimeDatabaseController} from "./FirebaseRealtimeDb/RealTimeDatabaseController";
+
 
 let bodyParser = require('body-parser')
 const app = express();

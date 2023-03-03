@@ -29,7 +29,7 @@ public class RealtimeDbApi : IDatabaseApi
         if (!hasDatabaseLoaded.ContainsKey(database.Id))
         {
             var httpResponseMessage = _client.PostAsJsonAsync(_loadPath, database).Result;
-            hasDatabaseLoaded[database.Id] = true;
+            hasDatabaseLoaded.Add(database.Id, true);
         }
         
         var databaseTables = new List<DatabaseTable>();

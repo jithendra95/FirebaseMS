@@ -1,4 +1,4 @@
-GET http://localhost:5050/realtimeDb/1
+GET http://localhost:5050/realtimeDb/175a2c8f927744d4959af389cf599fde
 Accept: application/json
 
 ###

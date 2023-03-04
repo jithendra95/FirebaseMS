@@ -4,14 +4,14 @@ using Domain;
 
 namespace FirebaseDatabase;
 
-public class RealtimeDbApi : IDatabaseApi
+public class FirebaseApi : IDatabaseApi
 {
     private readonly HttpClient _client;
     private readonly string _path;
-    private readonly Dictionary<string, bool> hasDatabaseLoaded;
+    private readonly Dictionary<string, bool> _hasDatabaseLoaded;
     private readonly string _loadPath;
 
-    public RealtimeDbApi()
+    public FirebaseApi()
     {
         _client = new HttpClient();
         // Update port # in the following line.
@@ -19,17 +19,17 @@ public class RealtimeDbApi : IDatabaseApi
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
-        _path = "realtimeDb";
+        _path = "database";
         _loadPath = "loadDatabase";
-        hasDatabaseLoaded = new Dictionary<string, bool>();
+        _hasDatabaseLoaded = new Dictionary<string, bool>();
     }
 
     public Database Read(Database database)
     {
-        if (!hasDatabaseLoaded.ContainsKey(database.Id))
+        if (!_hasDatabaseLoaded.ContainsKey(database.Id))
         {
             var httpResponseMessage = _client.PostAsJsonAsync(_loadPath, database).Result;
-            hasDatabaseLoaded.Add(database.Id, true);
+            _hasDatabaseLoaded.Add(database.Id, true);
         }
         
         var databaseTables = new List<DatabaseTable>();

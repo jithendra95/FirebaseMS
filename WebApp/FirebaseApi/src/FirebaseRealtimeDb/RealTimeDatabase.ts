@@ -3,6 +3,7 @@ import {firebaseApp} from "../FirebaseInitializer";
 import {Table} from "./Models";
 import {DetectRootLevelObjects, DetectTables} from "./Serializer";
 import {IDatabase} from "../IDatabase";
+import Reference = database.Reference;
 
 export class RealTimeDatabase implements IDatabase {
 
@@ -11,6 +12,8 @@ export class RealTimeDatabase implements IDatabase {
     private allTables: Table[] = [];
     private maxAttempts = 3;
     private dataFetchedOnce = false;
+    private readonly listener: any;
+    private ref?:  Reference;
     private readonly app;
 
     constructor(serviceAccountPath: string, databaseUrl: string, appName: string) {
@@ -19,9 +22,9 @@ export class RealTimeDatabase implements IDatabase {
         try {
             this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
             const db = database(this.app);
-            const ref = db.ref('/');
+            this.ref = db.ref('/');
 
-            ref.on("value", (snapshot) => {
+            this.listener = this.ref.on("value", (snapshot) => {
                 let root = snapshot.val();
                 this.allTables = []
                 DetectTables(root, "", this.allTables, "");
@@ -44,11 +47,14 @@ export class RealTimeDatabase implements IDatabase {
                 return await delay(() => this.GetTables(attempt! + 1), 3 * 1000) as Promise<Table[]>;
             }
             return Promise.resolve([]);
-            
         } else {
             return Promise.resolve([]);
         }
-
+    }
+    
+    public Disconnect(){
+        this.ref?.off("value", this.listener);
+        this.allTables.splice(0);
     }
 
 }

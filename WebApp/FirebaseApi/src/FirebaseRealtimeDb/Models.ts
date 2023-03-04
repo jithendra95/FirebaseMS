@@ -11,6 +11,18 @@ export class Table {
         this.path = path;
     }
 }
+export enum DataBaseTypeEnum{
+    firestore,
+    realtimeDb
+}
+
+export interface DatabaseCredentials{
+    Id: string;
+    DatabaseName: string;
+    PathToCredentials: string;
+    DatabaseType: DataBaseTypeEnum
+    DatabaseUrl: string;
+}
 
 export class TableRecord {
     values: {[key: string]: string} = {}

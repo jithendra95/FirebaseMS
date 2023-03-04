@@ -42,12 +42,7 @@ public class DatabaseRepository : IDatabaseRepository
         var database = _databaseStorageRepository.Read(id);
         try
         {
-            return database.DatabaseType switch
-            {
-                DatabaseTypeEnum.Realtimedb => _api.Read(database),
-                DatabaseTypeEnum.Firestore => throw new NotImplementedException(),
-                _ => throw new InvalidDataException()
-            };
+            return _api.Read(database);
         }
         catch (NotImplementedException e)
         {

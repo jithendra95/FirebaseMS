@@ -1,5 +1,5 @@
 import express = require("express");
-import {RealtimeDatabaseController} from "./FirebaseRealtimeDb/RealTimeDatabaseController";
+import {DatabaseController} from "./FirebaseRealtimeDb/DatabaseController";
 
 
 let bodyParser = require('body-parser')
@@ -8,15 +8,21 @@ const app = express();
 app.use(bodyParser.json())
 
 
-app.get('/realtimeDb/:id', async function (req, res) {
+app.get('/database/:id', async function (req, res) {
     res.setHeader('content-type', 'application/json');
-    let tables = await RealtimeDatabaseController.GetTablesForDatabase(req.params.id);
+    let tables = await DatabaseController.GetTablesForDatabase(req.params.id);
+    res.end(JSON.stringify(tables));
+})
+
+app.delete('/database/:id', async function (req, res) {
+    res.setHeader('content-type', 'application/json');
+    let tables = await DatabaseController.GetTablesForDatabase(req.params.id);
     res.end(JSON.stringify(tables));
 })
 
 app.post('/loadDatabase', function (req, res) {
     res.setHeader('content-type', 'application/json');
-    RealtimeDatabaseController.LoadDatabases(req.body);
+    DatabaseController.LoadDatabases(req.body);
     res.end("true");
 })
 

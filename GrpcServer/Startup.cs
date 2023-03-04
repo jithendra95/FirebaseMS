@@ -25,7 +25,7 @@ namespace GrpcServer
             services.AddCodeFirstGrpcReflection();
 
             services.AddAuthorization();
-            services.AddScoped<IDatabaseApi, RealtimeDbApi>();
+            services.AddScoped<IDatabaseApi, FirebaseApi>();
             services.AddScoped<IStorage<IEnumerable<Database>>, FileStorage<IEnumerable<Database>>>();
             services.AddScoped<IRepository<Database>,DatabaseFileRepository>();
             

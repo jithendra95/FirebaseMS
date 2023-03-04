@@ -9,7 +9,6 @@ public class FirebaseApi : IDatabaseApi
     private readonly HttpClient _client;
     private readonly string _path;
     private readonly Dictionary<string, bool> _hasDatabaseLoaded;
-    private readonly string _loadPath;
 
     public FirebaseApi()
     {
@@ -20,7 +19,6 @@ public class FirebaseApi : IDatabaseApi
         _client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
         _path = "database";
-        _loadPath = "loadDatabase";
         _hasDatabaseLoaded = new Dictionary<string, bool>();
     }
 
@@ -28,7 +26,7 @@ public class FirebaseApi : IDatabaseApi
     {
         if (!_hasDatabaseLoaded.ContainsKey(database.Id))
         {
-            var httpResponseMessage = _client.PostAsJsonAsync(_loadPath, database).Result;
+            var httpResponseMessage = _client.PostAsJsonAsync(_path, database).Result;
             _hasDatabaseLoaded.Add(database.Id, true);
         }
         

@@ -32,4 +32,9 @@ public class DatabaseRpcClient: IDatabaseService
     {
         return _server.CreateDatabase(databaseCreateMessage);
     }
+
+    public bool DisconnectDatabase(string id)
+    {
+        return _server.DisconnectDatabase(id);
+    }
 }

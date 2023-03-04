@@ -51,6 +51,11 @@ public class DatabaseRepository : IDatabaseRepository
         }
     }
 
+    public bool DisconnectDatabase(string id)
+    {
+        return _api.Delete(id);
+    }
+
     public IEnumerable<Database> GetAllDatabases()
     {
         return _databaseStorageRepository.ReadAll();

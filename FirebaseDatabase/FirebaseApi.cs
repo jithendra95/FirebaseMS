@@ -29,16 +29,13 @@ public class FirebaseApi : IDatabaseApi
             var httpResponseMessage = _client.PostAsJsonAsync(_path, database).Result;
             _hasDatabaseLoaded.Add(database.Id, true);
         }
-        
-        var databaseTables = new List<DatabaseTable>();
+
         var response = _client.GetAsync(Path.Combine(_path, database.Id)).Result;
-        if (response.IsSuccessStatusCode)
-        {
-            databaseTables = response.Content.ReadAsAsync<List<DatabaseTable>>().Result;
-        }
+        if (!response.IsSuccessStatusCode) return database;
+        var databaseTables = response.Content.ReadAsAsync<List<DatabaseTable>>().Result;
         database.UnstructuredTables =  databaseTables;
 
-        return database;
+        return database; 
     }
 
     public bool Create(Database newObject)
@@ -51,9 +48,9 @@ public class FirebaseApi : IDatabaseApi
         throw new NotImplementedException();
     }
 
-
     public bool Delete(string id)
     {
-        throw new NotImplementedException();
+        var response = _client.DeleteAsync(Path.Combine(_path, id)).Result;
+        return response.IsSuccessStatusCode && response.Content.ReadAsAsync<bool>().Result;
     }
 }

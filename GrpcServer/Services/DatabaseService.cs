@@ -70,4 +70,9 @@ public class DatabaseService : IDatabaseService
             throw;
         }
     }
+
+    public bool DisconnectDatabase(string id)
+    {
+        return _databaseRepository.DisconnectDatabase(id);
+    }
 }

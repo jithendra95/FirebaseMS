@@ -61,4 +61,11 @@ public class DatabaseController : ControllerBase
         var message = new DatabaseTableMessage { Path = id, DatabaseId = databaseId };
         return _databaseServer.GetDatabaseTable(message);
     }
+    
+    [HttpDelete]
+    [Route("{id}")]
+    public bool Delete(string id)
+    {
+        return _databaseServer.DisconnectDatabase(id);
+    }
 }

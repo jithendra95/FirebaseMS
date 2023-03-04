@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {DatabaseDto} from "../models/models.Dto";
 import {AddDatabaseDialog} from "./AddDatabaseDialog";
 import {DatabasePage} from "./DatabasePage";
-import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
+import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import {TabPane} from "react-bootstrap";
 
 export const Home = () => {
     const [showAddDialog, setShowAddDialog] = useState(false);

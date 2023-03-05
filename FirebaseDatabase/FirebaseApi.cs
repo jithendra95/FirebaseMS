@@ -51,6 +51,11 @@ public class FirebaseApi : IDatabaseApi
     public bool Delete(string id)
     {
         var response = _client.DeleteAsync(Path.Combine(_path, id)).Result;
-        return response.IsSuccessStatusCode && response.Content.ReadAsAsync<bool>().Result;
+        if (response.IsSuccessStatusCode)
+        {
+            if (response.Content.ReadAsAsync<bool>().Result)
+                _hasDatabaseLoaded.Remove(id);
+        }
+        return  false;
     }
 }

@@ -4,6 +4,7 @@ import {AddDatabaseDialog} from "./AddDatabaseDialog";
 import {DatabasePage} from "./DatabasePage";
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import axios from "axios";
 
 export const Home = () => {
     const [showAddDialog, setShowAddDialog] = useState(false);
@@ -32,10 +33,14 @@ export const Home = () => {
         }
     }
 
-    const CloseTab = (index: number) => {
-        let newConnectedDatabases = [...connectedDatabases]
-        newConnectedDatabases.splice(index, 1);
-        SetConnectedDatabases(newConnectedDatabases);
+    const CloseTab = async (index: number) => {
+        let database = connectedDatabases[index];
+        let isDatabaseDisconnected = await axios.delete(`database/${database.id}`);
+        if (isDatabaseDisconnected) {
+            let newConnectedDatabases = [...connectedDatabases]
+            newConnectedDatabases.splice(index, 1);
+            SetConnectedDatabases(newConnectedDatabases);
+        }
     }
 
     const SetConnectedDatabases = (newConnectedDatabases: DatabaseDto[]) => {

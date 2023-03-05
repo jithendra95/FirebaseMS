@@ -6,7 +6,6 @@ export class DatabaseController {
     private static databases: { [key: string]: RealTimeDatabase } = {};
 
     public static LoadDatabases(databaseCredentials: DatabaseCredentials) {
-        console.log(databaseCredentials)
         if (!this.databases[databaseCredentials.Id]) {
             switch (databaseCredentials.DatabaseType) {
                 case DataBaseTypeEnum.realtimeDb:

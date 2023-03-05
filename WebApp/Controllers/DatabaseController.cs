@@ -64,7 +64,7 @@ public class DatabaseController : ControllerBase
     
     [HttpDelete]
     [Route("{id}")]
-    public bool Delete(string id)
+    public DatabaseDisconnectedMessage Delete(string id)
     {
         return _databaseServer.DisconnectDatabase(id);
     }

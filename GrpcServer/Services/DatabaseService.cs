@@ -71,8 +71,17 @@ public class DatabaseService : IDatabaseService
         }
     }
 
-    public bool DisconnectDatabase(string id)
+    public DatabaseDisconnectedMessage DisconnectDatabase(string id)
     {
-        return _databaseRepository.DisconnectDatabase(id);
+        try
+        {
+            return new DatabaseDisconnectedMessage { IsDisconnected = _databaseRepository.DisconnectDatabase(id) };
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return new DatabaseDisconnectedMessage { IsDisconnected = false };;
+        }
+       
     }
 }

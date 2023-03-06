@@ -42,7 +42,9 @@ public class DatabaseRepository : IDatabaseRepository
         var database = _databaseStorageRepository.Read(id);
         try
         {
-            return _api.Read(database);
+            var result= _api.Read(database);
+            var database2 = _databaseStorageRepository.Read(id);
+            return result;
         }
         catch (NotImplementedException e)
         {

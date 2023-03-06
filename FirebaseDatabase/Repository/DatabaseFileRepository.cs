@@ -28,8 +28,11 @@ public class DatabaseFileRepository : IRepository<Database>
 
     public bool Save(Database database)
     {
-        var databases = _databases.Append(database);
-        return _storage.Save(_filePath, false, databases);
+        lock (_databases)
+        {
+            var databases = _databases.Append(database);
+            return _storage.Save(_filePath, false, databases);  
+        }
     }
 
     public Database Read(string id)

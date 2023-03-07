@@ -1,16 +1,17 @@
 ﻿using Domain.Extensions;
 
 namespace Domain;
-public class Database : IDatabase
+
+public class Database : IDatabase, ICloneable
 {
     public string Id { get; }
     public string PathToCredentials { get; }
     public string DatabaseUrl { get; }
     public string DatabaseName { get; }
     public DatabaseTypeEnum DatabaseType;
-    
+
     public IEnumerable<DatabaseTable> UnstructuredTables { get; set; }
-    
+
     public IEnumerable<DatabaseTable> Tables => UnstructuredTables.ToOriginalTree();
 
 
@@ -28,6 +29,12 @@ public class Database : IDatabase
     public DatabaseTable GetTable(string path)
     {
         return UnstructuredTables.First(x => x.Path == path);
+    }
+
+    public object Clone()
+    {
+        return new Database(Id, PathToCredentials, DatabaseUrl, UnstructuredTables, DatabaseType,
+            DatabaseName);
     }
 }
 

@@ -12,7 +12,8 @@ public class DatabaseRepository : IDatabaseRepository
     private readonly IRepository<Database> _databaseStorageRepository;
     private readonly ILogger<DatabaseRepository> _logger;
 
-    public DatabaseRepository(IDatabaseApi api, IRepository<Database> databaseStorageRepository,ILogger<DatabaseRepository> logger)
+    public DatabaseRepository(IDatabaseApi api, IRepository<Database> databaseStorageRepository,
+        ILogger<DatabaseRepository> logger)
     {
         _api = api;
         _databaseStorageRepository = databaseStorageRepository;
@@ -39,11 +40,15 @@ public class DatabaseRepository : IDatabaseRepository
 
     public Database GetDatabase(string id)
     {
-        var database = _databaseStorageRepository.Read(id);
+        if (_databaseStorageRepository.Read(id).Clone() is not Database database)
+        {
+            _logger.LogWarning("Invalid Database ID: ${Id}", id);
+            throw new InvalidDataException($"Invalid Database ID: ${id}");
+        }
+
         try
         {
-            var result= _api.Read(database);
-            var database2 = _databaseStorageRepository.Read(id);
+            var result = _api.Read(database);
             return result;
         }
         catch (NotImplementedException e)

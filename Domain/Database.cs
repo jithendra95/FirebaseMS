@@ -33,7 +33,8 @@ public class Database : IDatabase, ICloneable
 
     public object Clone()
     {
-        return new Database(Id, PathToCredentials, DatabaseUrl, UnstructuredTables, DatabaseType,
+        // Prevent cloning tables
+        return new Database(Id, PathToCredentials, DatabaseUrl, new List<DatabaseTable>(), DatabaseType,
             DatabaseName);
     }
 }

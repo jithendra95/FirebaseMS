@@ -60,7 +60,15 @@ public class DatabaseRepository : IDatabaseRepository
 
     public bool DisconnectDatabase(string id)
     {
-        return _api.Delete(id);
+        try
+        {
+            return _api.Delete(id); 
+        }catch (Exception e)
+        {
+            _logger.LogError(e.ToString());
+            return false;
+        }
+        
     }
 
     public IEnumerable<Database> GetAllDatabases()

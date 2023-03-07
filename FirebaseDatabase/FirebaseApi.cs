@@ -50,6 +50,7 @@ public class FirebaseApi : IDatabaseApi
 
     public bool Delete(string id)
     {
+        
         var response = _client.DeleteAsync(Path.Combine(_path, id)).Result;
         if (response.IsSuccessStatusCode)
         {

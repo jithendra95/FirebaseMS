@@ -33,7 +33,7 @@ public class FirebaseApi : IDatabaseApi
         var response = _client.GetAsync(Path.Combine(_path, database.Id)).Result;
         if (!response.IsSuccessStatusCode) return database;
         var databaseTables = response.Content.ReadAsAsync<List<DatabaseTable>>().Result;
-        database.UnstructuredTables =  databaseTables;
+        //database.UnstructuredTables =  databaseTables;
 
         return database; 
     }

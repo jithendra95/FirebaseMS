@@ -28,7 +28,7 @@ public class DatabaseRepository : IDatabaseRepository
 
         var id = $"{Guid.NewGuid():N}";
         var databaseName = fileName.Split("-firebase")[0];
-        var newDatabase = new Database(id, filePath, databaseUrl, new List<DatabaseTable>(), databaseType,
+        var newDatabase = new Database(id, filePath, databaseUrl, databaseType,
             databaseName);
         if (_databaseStorageRepository.Save(newDatabase))
         {

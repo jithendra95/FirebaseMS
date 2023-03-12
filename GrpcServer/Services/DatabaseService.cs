@@ -47,7 +47,7 @@ public class DatabaseService : IDatabaseService
     {
         try
         {
-            return _databaseRepository.GetDatabase(message.DatabaseId).GetTable(message.Path).ToMessage(true);
+            return new DatabaseTableMessage();//(_databaseRepository.GetDatabase(message.DatabaseId).GetTable(message.Path).ToMessage(true));
         }
         catch (Exception e)
         {

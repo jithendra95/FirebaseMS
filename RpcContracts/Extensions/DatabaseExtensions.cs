@@ -13,8 +13,20 @@ public static class DatabaseExtensions
             DatabaseUrl = database.DatabaseUrl,
             PathToCredentials = database.PathToCredentials,
             DatabaseType = database.DatabaseType,
+            DatabaseName = database.DatabaseName
+        };
+    }
+
+    public static DatabaseMessage ToMessage(this Database database, IEnumerable<DatabaseTable> databaseTable)
+    {
+        return new DatabaseMessage()
+        {
+            Id = database.Id,
+            DatabaseUrl = database.DatabaseUrl,
+            PathToCredentials = database.PathToCredentials,
+            DatabaseType = database.DatabaseType,
             DatabaseName = database.DatabaseName,
-            Tables = database.Tables.Select(x => ToMessage(x, false)),
+            Tables = databaseTable.Select(x => ToMessage(x, false))
         };
     }
 
@@ -24,7 +36,6 @@ public static class DatabaseExtensions
             database.Id,
             database.PathToCredentials,
             database.DatabaseUrl,
-            new List<DatabaseTable>(),
             database.DatabaseType,
             database.DatabaseName
         );

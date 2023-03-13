@@ -8,6 +8,7 @@ import Reference = database.Reference;
 export class RealTimeDatabase implements IDatabase {
 
     private serviceAccount: string;
+    private databaseId: string;
     private databaseUrl: string;
     private allTables: Table[] = [];
     private maxAttempts = 3;
@@ -16,8 +17,9 @@ export class RealTimeDatabase implements IDatabase {
     private ref?:  Reference;
     private readonly app;
 
-    constructor(serviceAccountPath: string, databaseUrl: string, appName: string) {
+    constructor(serviceAccountPath: string, databaseId: string, databaseUrl: string, appName: string) {
         this.serviceAccount = serviceAccountPath;
+        this.databaseId = databaseId;
         this.databaseUrl = databaseUrl;
         try {
             this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
@@ -27,8 +29,8 @@ export class RealTimeDatabase implements IDatabase {
             this.listener = this.ref.on("value", (snapshot) => {
                 let root = snapshot.val();
                 this.allTables = []
-                DetectTables(root, "", this.allTables, "");
-                DetectRootLevelObjects(root, this.allTables);
+                DetectTables(root, "", this.allTables, databaseId,"");
+                DetectRootLevelObjects(root, this.allTables, databaseId);
                 this.dataFetchedOnce = true
             });
         } catch {

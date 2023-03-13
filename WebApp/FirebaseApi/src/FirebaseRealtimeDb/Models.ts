@@ -1,14 +1,16 @@
 
 export class Table {
+    databaseId: string;
     name: string;
     path: string;
     parentPath?: string;
     records: TableRecord[] = []
     columns: string[] = []
 
-    constructor(name: string, path: string) {
+    constructor(name: string, path: string, databaseId: string) {
         this.name = name;
         this.path = path;
+        this.databaseId = databaseId;
     }
 }
 export enum DataBaseTypeEnum{

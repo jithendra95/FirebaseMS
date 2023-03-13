@@ -9,7 +9,9 @@ export class DatabaseController {
         if (!this.databases[databaseCredentials.Id]) {
             switch (databaseCredentials.DatabaseType) {
                 case DataBaseTypeEnum.realtimeDb:
-                    this.databases[databaseCredentials.Id] = new RealTimeDatabase(databaseCredentials.PathToCredentials, databaseCredentials.DatabaseUrl, databaseCredentials.DatabaseName);
+                    this.databases[databaseCredentials.Id] = new RealTimeDatabase(
+                        databaseCredentials.PathToCredentials, databaseCredentials.Id,
+                        databaseCredentials.DatabaseUrl, databaseCredentials.DatabaseName);
                     break;
                 case DataBaseTypeEnum.firestore:
                     throw "Not Implemented";

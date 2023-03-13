@@ -1,6 +1,6 @@
 import {Table, TableRecord} from "./Models";
 
-export function DetectTables(currentNode: any, currentNodeId: string, allTable: Table[], path: string, parent?: Table) {
+export function DetectTables(currentNode: any, currentNodeId: string, allTable: Table[], path: string, databaseId:string, parent?: Table) {
 
     if (typeof currentNode == "object") {
         let currentNodeKeys = Object.keys(currentNode);
@@ -9,12 +9,12 @@ export function DetectTables(currentNode: any, currentNodeId: string, allTable: 
                 path = path + "." + currentNodeId;
             else
                 path = currentNodeId;
-            let table = new Table(currentNodeId, path)
+            let table = new Table(currentNodeId, path, databaseId)
             if (typeof parent !== "undefined") {
                 table.parentPath = parent.path
             }
             Object.keys(currentNode).map(key => {
-                DetectTables(currentNode[key], key, allTable, path, table)
+                DetectTables(currentNode[key], key, allTable, path, databaseId, table)
             });
             if (!(table.name === "" && table.path === ""))
                 allTable.push(table);
@@ -22,8 +22,6 @@ export function DetectTables(currentNode: any, currentNodeId: string, allTable: 
             CreateRecord(currentNode, currentNodeKeys, currentNodeId, parent);
         }
     }
-
-
 }
 
 function CreateRecord(currentNode: any, currentNodeKeys: string[], currentNodeId: string, parent?: Table) {
@@ -42,7 +40,7 @@ function CreateRecord(currentNode: any, currentNodeKeys: string[], currentNodeId
     parent?.records.push(record);
 }
 
-export function DetectRootLevelObjects(rootNode: any, allTables: Table[]): void {
+export function DetectRootLevelObjects(rootNode: any, allTables: Table[],  databaseId: string): void {
     if (typeof rootNode == "object") {
         let rootNodeKeys = Object.keys(rootNode);
        
@@ -51,7 +49,7 @@ export function DetectRootLevelObjects(rootNode: any, allTables: Table[]): void 
             let childNodeKeys = Object.keys(childNode);
            
             if(childNodeKeys.length > 0 && (typeof childNode[childNodeKeys[0]] !== 'object')){
-                let table = new Table(key, key);
+                let table = new Table(key, key, databaseId);
                 table.parentPath = "";
                 CreateRecord(childNode, childNodeKeys, key, table);
                 allTables.push(table);

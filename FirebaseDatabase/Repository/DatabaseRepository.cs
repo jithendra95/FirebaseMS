@@ -1,10 +1,9 @@
 ﻿using System.Data;
 using Domain;
-using FirebaseDatabase.Repository;
 using FirebaseDatabase.Utilities;
 using Microsoft.Extensions.Logging;
 
-namespace FirebaseDatabase;
+namespace FirebaseDatabase.Repository;
 
 public class DatabaseRepository : IDatabaseRepository
 {
@@ -40,22 +39,7 @@ public class DatabaseRepository : IDatabaseRepository
 
     public Database GetDatabase(string id)
     {
-        if (_databaseStorageRepository.Read(id).Clone() is not Database database)
-        {
-            _logger.LogWarning("Invalid Database ID: ${Id}", id);
-            throw new InvalidDataException($"Invalid Database ID: ${id}");
-        }
-
-        try
-        {
-            var result = _api.Read(database);
-            return result;
-        }
-        catch (NotImplementedException e)
-        {
-            _logger.LogError(e.ToString());
-            return database;
-        }
+        return _databaseStorageRepository.Read(id);
     }
 
     public bool DisconnectDatabase(string id)

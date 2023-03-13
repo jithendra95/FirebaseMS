@@ -4,7 +4,7 @@ namespace FirebaseDatabase;
 
 public interface IDatabaseApi
 {
-    public Database Read(Database newObject);
+    public IEnumerable<DatabaseTable> Read(Database newObject);
     
     public bool Create(Database newObject);
     

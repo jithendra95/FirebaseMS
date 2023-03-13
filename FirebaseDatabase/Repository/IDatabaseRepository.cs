@@ -1,7 +1,6 @@
 ﻿using Domain;
-using FirebaseDatabase.Repository;
 
-namespace FirebaseDatabase;
+namespace FirebaseDatabase.Repository;
 
 public interface IDatabaseRepository
 {

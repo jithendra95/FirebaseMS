@@ -22,20 +22,22 @@ public class FirebaseApi : IDatabaseApi
         _hasDatabaseLoaded = new Dictionary<string, bool>();
     }
 
-    public Database Read(Database database)
+    public IEnumerable<DatabaseTable> Read(Database database)
     {
         if (!_hasDatabaseLoaded.ContainsKey(database.Id))
         {
             var httpResponseMessage = _client.PostAsJsonAsync(_path, database).Result;
-            _hasDatabaseLoaded.Add(database.Id, true);
+            if (!httpResponseMessage.IsSuccessStatusCode)
+            {
+                return new List<DatabaseTable>();
+            }
+            _hasDatabaseLoaded.Add(database.Id, true);   
         }
 
         var response = _client.GetAsync(Path.Combine(_path, database.Id)).Result;
-        if (!response.IsSuccessStatusCode) return database;
-        var databaseTables = response.Content.ReadAsAsync<List<DatabaseTable>>().Result;
+        return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<List<DatabaseTable>>().Result:  new List<DatabaseTable>();
         //database.UnstructuredTables =  databaseTables;
-
-        return database; 
+        //return database; 
     }
 
     public bool Create(Database newObject)

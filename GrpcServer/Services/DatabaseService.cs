@@ -39,7 +39,7 @@ public class DatabaseService : IDatabaseService
         try
         {
             var database = _databaseRepository.GetDatabase(id);
-            var tables = _tableRepository.GetTableFromDatabase(id);
+            var tables = _tableRepository.GetTableFromDatabase(database);
             return database.ToMessage(tables);
         }
         catch (Exception e)

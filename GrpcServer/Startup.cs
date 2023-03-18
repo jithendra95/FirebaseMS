@@ -28,6 +28,7 @@ namespace GrpcServer
             services.AddSingleton<IDatabaseApi, FirebaseApi>();
             services.AddSingleton<IStorage<IEnumerable<Database>>, FileStorage<IEnumerable<Database>>>();
             services.AddSingleton<IRepository<Database>,DatabaseFileRepository>();
+            services.AddSingleton<InMemoryDatabaseTableRepository>();
             
             services.AddSingleton<IDatabaseRepository, DatabaseRepository>();
             services.AddSingleton<IDatabaseService, DatabaseService>();

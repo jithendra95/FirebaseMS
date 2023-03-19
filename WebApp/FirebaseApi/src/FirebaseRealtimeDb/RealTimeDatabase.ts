@@ -29,7 +29,7 @@ export class RealTimeDatabase implements IDatabase {
             this.listener = this.ref.on("value", (snapshot) => {
                 let root = snapshot.val();
                 this.allTables = []
-                DetectTables(root, "", this.allTables, databaseId,"");
+                DetectTables(root, "", this.allTables,"", databaseId);
                 DetectRootLevelObjects(root, this.allTables, databaseId);
                 this.dataFetchedOnce = true
             });

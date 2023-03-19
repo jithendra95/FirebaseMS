@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Extensions;
 
 namespace FirebaseDatabase.Repository;
 
@@ -25,13 +26,13 @@ public class InMemoryDatabaseTableRepository
         }
 
         _loadedDatabases.Add(database.Id, true);
-        return databaseTables;
+        return databaseTables.Where(table=> table.DatabaseId == database.Id).ToOriginalTree();
     }
 
     public IEnumerable<DatabaseTable> GetTableFromDatabase(Database database)
     {
         return _loadedDatabases.ContainsKey(database.Id)
-            ? _databaseTables.Where(table => table.DatabaseId == database.Id)
+            ? _databaseTables.Where(table => table.DatabaseId == database.Id).ToOriginalTree()
             : LoadTables(database);
     }
 

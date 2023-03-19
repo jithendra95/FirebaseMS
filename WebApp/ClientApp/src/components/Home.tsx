@@ -11,7 +11,7 @@ export const Home = () => {
     const [connectedDatabases, setConnectedDatabases] = useState<DatabaseDto[]>([]);
     const [key, setKey] = useState('1');
 
-    const ShowAddDialog = () => {
+    const ShowOrHideAddDialog = () => {
         setShowAddDialog(!showAddDialog);
     }
 
@@ -19,18 +19,30 @@ export const Home = () => {
         let newConnectedDatabases = [...connectedDatabases]
         newConnectedDatabases.push(database)
         SetConnectedDatabases(newConnectedDatabases);
-        ShowAddDialog();
+        SendConnectionMessage(database.id);
+        ShowOrHideAddDialog();
 
     }
     const LoadConnectedDatabases = () => {
         let connectedDatabasesString = localStorage.getItem("ConnectedDatabases")
         if (connectedDatabasesString !== null) {
-            let connectedDatabases = JSON.parse(connectedDatabasesString)
+            let connectedDatabases = JSON.parse(connectedDatabasesString) as DatabaseDto[]
+            connectedDatabases.map(database =>{
+                SendConnectionMessage(database.id);
+            })
             setConnectedDatabases(connectedDatabases)
             SetSelectedDatabase(connectedDatabases)
+           
         } else {
-            ShowAddDialog()
+            ShowOrHideAddDialog()
         }
+        
+        
+        
+    }
+    
+    const SendConnectionMessage = async (databaseId: string) =>{
+        await axios.post(`database/connect/${databaseId}`)
     }
 
     const CloseTab = async (index: number) => {
@@ -69,7 +81,7 @@ export const Home = () => {
                                                                onClick={() => CloseTab(i)}>&#10005;</span>
                             </Tab>)
                     })}
-                    <Tab disabled onClick={() => ShowAddDialog()}>Add</Tab>
+                    <Tab disabled onClick={() => ShowOrHideAddDialog()}>Add</Tab>
                 </TabList>
 
 
@@ -85,7 +97,7 @@ export const Home = () => {
             </Tabs>
 
             <AddDatabaseDialog showDialog={showAddDialog} connectDatabase={ConnectDatabase}
-                               handleDialogInteraction={ShowAddDialog}/>
+                               handleDialogInteraction={ShowOrHideAddDialog}/>
         </>
 
 

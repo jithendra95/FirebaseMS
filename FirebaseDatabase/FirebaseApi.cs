@@ -9,7 +9,7 @@ public class FirebaseApi : IDatabaseApi
     private readonly HttpClient _client;
     private readonly string _path;
     private readonly Dictionary<string, bool> _hasDatabaseLoaded;
-
+    private readonly object dataLock = new object();
     public FirebaseApi()
     {
         _client = new HttpClient();
@@ -24,20 +24,18 @@ public class FirebaseApi : IDatabaseApi
 
     public IEnumerable<DatabaseTable> Read(Database database)
     {
-        if (!_hasDatabaseLoaded.ContainsKey(database.Id))
-        {
-            var httpResponseMessage = _client.PostAsJsonAsync(_path, database).Result;
-            if (!httpResponseMessage.IsSuccessStatusCode)
+            if (!_hasDatabaseLoaded.ContainsKey(database.Id))
             {
-                return new List<DatabaseTable>();
+                var httpResponseMessage = _client.PostAsJsonAsync(_path, database).Result;
+                if (!httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return new List<DatabaseTable>();
+                }
+                _hasDatabaseLoaded.Add(database.Id, true);   
             }
-            _hasDatabaseLoaded.Add(database.Id, true);   
-        }
 
-        var response = _client.GetAsync(Path.Combine(_path, database.Id)).Result;
-        return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<List<DatabaseTable>>().Result:  new List<DatabaseTable>();
-        //database.UnstructuredTables =  databaseTables;
-        //return database; 
+            var response = _client.GetAsync(Path.Combine(_path, database.Id)).Result;
+            return response.IsSuccessStatusCode ? response.Content.ReadAsAsync<List<DatabaseTable>>().Result:  new List<DatabaseTable>();
     }
 
     public bool Create(Database newObject)

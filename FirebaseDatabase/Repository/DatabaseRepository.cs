@@ -11,12 +11,14 @@ public class DatabaseRepository : IDatabaseRepository
     private readonly IRepository<Database> _databaseStorageRepository;
     private readonly ILogger<DatabaseRepository> _logger;
 
+    public Dictionary<string, bool> _connectedDatabases;
     public DatabaseRepository(IDatabaseApi api, IRepository<Database> databaseStorageRepository,
         ILogger<DatabaseRepository> logger)
     {
         _api = api;
         _databaseStorageRepository = databaseStorageRepository;
         _logger = logger;
+        _connectedDatabases = new Dictionary<string, bool>();
     }
 
     public Database CreateDatabase(string databaseUrl, DatabaseTypeEnum databaseType, string fileName,
@@ -37,9 +39,19 @@ public class DatabaseRepository : IDatabaseRepository
         throw new DataException();
     }
 
+    
     public Database GetDatabase(string id)
     {
         return _databaseStorageRepository.Read(id);
+    }
+
+    public Database ConnectDatabase(string id)
+    {
+        if (!_connectedDatabases.ContainsKey(id))
+        {
+            _connectedDatabases.Add(id, true);
+        }
+        return GetDatabase(id);
     }
 
     public bool DisconnectDatabase(string id)

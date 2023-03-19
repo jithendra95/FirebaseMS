@@ -77,6 +77,11 @@ public class DatabaseService : IDatabaseService
         }
     }
 
+    public DatabaseMessage ConnectDatabase(string id)
+    {
+        return _databaseRepository.ConnectDatabase(id).ToMessage();
+    }
+
     public DatabaseDisconnectedMessage DisconnectDatabase(string id)
     {
         try

@@ -12,7 +12,6 @@ export class DatabaseController {
                     this.databases[databaseCredentials.Id] = new RealTimeDatabase(
                         databaseCredentials.PathToCredentials, databaseCredentials.Id,
                         databaseCredentials.DatabaseUrl, databaseCredentials.DatabaseName);
-                    console.log(this.databases)
                     break;
                 case DataBaseTypeEnum.firestore:
                     throw "Not Implemented";
@@ -29,7 +28,6 @@ export class DatabaseController {
         console.log(id)
         if (database) {
             database.Disconnect();
-            console.log(this.databases)
             return true;
         }
         return false;

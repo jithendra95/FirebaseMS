@@ -16,7 +16,6 @@ app.get('/database/:id', async function (req, res) {
 
 app.delete('/database/:id', async function (req, res) {
     res.setHeader('content-type', 'application/json');
-    console.log('Disconnect')
     let isDisconnected = DatabaseController.DisconnectDatabase(req.params.id);
     res.end(JSON.stringify(isDisconnected));
 })

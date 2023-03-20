@@ -4,6 +4,7 @@ import {Table} from "./Models";
 import {DetectRootLevelObjects, DetectTables} from "./Serializer";
 import {IDatabase} from "../IDatabase";
 import Reference = database.Reference;
+import {type} from "os";
 
 export class RealTimeDatabase implements IDatabase {
 
@@ -13,7 +14,7 @@ export class RealTimeDatabase implements IDatabase {
     private allTables: Table[] = [];
     private maxAttempts = 3;
     private dataFetchedOnce = false;
-    private readonly listener: any;
+    private listener: any;
     private ref?:  Reference;
     private readonly app;
 
@@ -25,20 +26,22 @@ export class RealTimeDatabase implements IDatabase {
             this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
             const db = database(this.app);
             this.ref = db.ref('/');
-
-            this.listener = this.ref.on("value", (snapshot) => {
-                let root = snapshot.val();
-                this.allTables = []
-                DetectTables(root, "", this.allTables,"", databaseId);
-                DetectRootLevelObjects(root, this.allTables, databaseId);
-                this.dataFetchedOnce = true
-            });
         } catch {
             this.app = undefined;
         }
 
     }
 
+    private initializeListener(){
+        if(typeof this.ref !== 'undefined')
+            this.listener = this.ref.on("value", (snapshot) => {
+                let root = snapshot.val();
+                this.allTables = []
+                DetectTables(root, "", this.allTables,"", this.databaseId);
+                DetectRootLevelObjects(root, this.allTables, this.databaseId);
+                this.dataFetchedOnce = true
+            });
+    }
     public async GetTables(attempt? :number): Promise<Table[]> {
         attempt ??= 1;
         if (this.app) {
@@ -46,6 +49,7 @@ export class RealTimeDatabase implements IDatabase {
                 return Promise.resolve(this.allTables);
             }
             else if (attempt <= this.maxAttempts) {
+                this.initializeListener()
                 return await delay(() => this.GetTables(attempt! + 1), 3 * 1000) as Promise<Table[]>;
             }
             return Promise.resolve([]);
@@ -57,6 +61,7 @@ export class RealTimeDatabase implements IDatabase {
     public Disconnect(){
         this.ref?.off("value", this.listener);
         this.allTables.splice(0);
+        this.dataFetchedOnce = false;
     }
 
 }

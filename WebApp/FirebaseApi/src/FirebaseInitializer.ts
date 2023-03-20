@@ -8,6 +8,7 @@ export const firebaseApp = (serveicePath: string, databaseUrl: string, appName: 
     }, appName);
 }
 
+
 // const serviceAccount = require('C:\\Users\\Jithendra.Thenuwara\\Downloads\\super-pass-64e2b-firebase-adminsdk-7zxq2-61f3d182fe.json');
 // return admin.initializeApp({
 //     credential: admin.credential.cert(serviceAccount),

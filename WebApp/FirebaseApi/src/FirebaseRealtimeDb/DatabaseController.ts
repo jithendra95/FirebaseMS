@@ -3,7 +3,7 @@ import {DatabaseCredentials, DataBaseTypeEnum, Table} from "./Models";
 
 
 export class DatabaseController {
-    private static databases: { [key: string]: RealTimeDatabase } = {};
+    private static databases: { [key: string]: RealTimeDatabase | undefined } = {};
 
     public static LoadDatabases(databaseCredentials: DatabaseCredentials) {
         if (!this.databases[databaseCredentials.Id]) {
@@ -12,6 +12,7 @@ export class DatabaseController {
                     this.databases[databaseCredentials.Id] = new RealTimeDatabase(
                         databaseCredentials.PathToCredentials, databaseCredentials.Id,
                         databaseCredentials.DatabaseUrl, databaseCredentials.DatabaseName);
+                    console.log(this.databases)
                     break;
                 case DataBaseTypeEnum.firestore:
                     throw "Not Implemented";
@@ -20,14 +21,15 @@ export class DatabaseController {
     }
 
     public static async GetTablesForDatabase(id: string): Promise<Table[]> {
-        return this.databases[id] ? this.databases[id].GetTables() : Promise.resolve([]);
+        return this.databases[id] ? this.databases[id]!.GetTables() : Promise.resolve([]);
     }
 
     public static DisconnectDatabase(id: string): boolean {
         let database = this.databases[id];
+        console.log(id)
         if (database) {
             database.Disconnect();
-            delete this.databases[id];
+            console.log(this.databases)
             return true;
         }
         return false;

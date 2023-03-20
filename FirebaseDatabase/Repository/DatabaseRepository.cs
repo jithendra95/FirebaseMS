@@ -58,6 +58,10 @@ public class DatabaseRepository : IDatabaseRepository
     {
         try
         {
+            if (!_connectedDatabases.ContainsKey(id))
+            {
+                _connectedDatabases.Remove(id);
+            }
             return _api.Delete(id); 
         }catch (Exception e)
         {

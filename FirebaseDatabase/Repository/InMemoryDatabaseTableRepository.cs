@@ -3,10 +3,12 @@ using Domain.Extensions;
 
 namespace FirebaseDatabase.Repository;
 
-public class InMemoryDatabaseTableRepository
+
+
+public class InMemoryDatabaseTableRepository : ITableRepository
 {
     private readonly IDatabaseApi _databaseTableApi;
-    private readonly IList<DatabaseTable> _databaseTables;
+    private readonly List<DatabaseTable> _databaseTables;
     private readonly Dictionary<string, bool> _loadedDatabases;
 
     public InMemoryDatabaseTableRepository(IDatabaseApi databaseTableApi)
@@ -16,7 +18,7 @@ public class InMemoryDatabaseTableRepository
         _loadedDatabases = new Dictionary<string, bool>();
     }
 
-    private IEnumerable<DatabaseTable> LoadTables(Database database)
+    public IEnumerable<DatabaseTable> LoadTables(Database database)
     {
         var tables = _databaseTableApi.Read(database);
         var databaseTables = tables.ToList();
@@ -27,6 +29,17 @@ public class InMemoryDatabaseTableRepository
 
         _loadedDatabases.Add(database.Id, true);
         return databaseTables.Where(table=> table.DatabaseId == database.Id).ToOriginalTree();
+    }
+
+    public bool UnLoadTables(string databaseId)
+    {
+        if (_loadedDatabases.ContainsKey(databaseId))
+        {
+            _loadedDatabases.Remove(databaseId);
+            _databaseTables.RemoveAll(table => table.DatabaseId == databaseId);
+        }
+
+        return true;
     }
 
     public IEnumerable<DatabaseTable> GetTableFromDatabase(Database database)

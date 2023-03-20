@@ -10,11 +10,11 @@ public class DatabaseService : IDatabaseService
 {
     private readonly ILogger<DatabaseService> _logger;
     private readonly IDatabaseRepository _databaseRepository;
-    private readonly InMemoryDatabaseTableRepository _tableRepository;
+    private readonly ITableRepository _tableRepository;
 
 
     public DatabaseService(ILogger<DatabaseService> logger, IDatabaseRepository databaseRepository,
-        InMemoryDatabaseTableRepository tableRepository)
+        ITableRepository tableRepository)
     {
         _logger = logger;
         _databaseRepository = databaseRepository;
@@ -86,13 +86,13 @@ public class DatabaseService : IDatabaseService
     {
         try
         {
+            _tableRepository.UnLoadTables(id);
             return new DatabaseDisconnectedMessage { IsDisconnected = _databaseRepository.DisconnectDatabase(id) };
         }
         catch (Exception e)
         {
             _logger.LogError(e.ToString());
             return new DatabaseDisconnectedMessage { IsDisconnected = false };
-            ;
         }
     }
 }

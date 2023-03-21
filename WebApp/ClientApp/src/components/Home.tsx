@@ -19,7 +19,6 @@ export const Home = () => {
         let newConnectedDatabases = [...connectedDatabases]
         newConnectedDatabases.push(database)
         SetConnectedDatabases(newConnectedDatabases);
-        SendConnectionMessage(database.id);
         ShowOrHideAddDialog();
 
     }
@@ -27,22 +26,12 @@ export const Home = () => {
         let connectedDatabasesString = localStorage.getItem("ConnectedDatabases")
         if (connectedDatabasesString !== null) {
             let connectedDatabases = JSON.parse(connectedDatabasesString) as DatabaseDto[]
-            connectedDatabases.map(database =>{
-                SendConnectionMessage(database.id);
-            })
             setConnectedDatabases(connectedDatabases)
             SetSelectedDatabase(connectedDatabases)
            
         } else {
             ShowOrHideAddDialog()
         }
-        
-        
-        
-    }
-    
-    const SendConnectionMessage = async (databaseId: string) =>{
-        await axios.post(`database/connect/${databaseId}`)
     }
 
     const CloseTab = async (index: number) => {

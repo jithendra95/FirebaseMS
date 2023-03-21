@@ -40,13 +40,6 @@ public class DatabaseController : ControllerBase
         };
         return _databaseServer.CreateDatabase(databaseCreateMessage);
     }
-    
-    [HttpPost]
-    [Route("connect/{id}")]
-    public DatabaseMessage ConnectDatabase(string id)
-    {
-        return _databaseServer.ConnectDatabase(id);
-    }
 
     [HttpGet]
     public IEnumerable<DatabaseMessage> GetAll()

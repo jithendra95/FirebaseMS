@@ -33,11 +33,6 @@ public class DatabaseRpcClient: IDatabaseService
         return _server.CreateDatabase(databaseCreateMessage);
     }
 
-    public DatabaseMessage ConnectDatabase(string id)
-    {
-        return _server.ConnectDatabase(id);
-    }
-
     public DatabaseDisconnectedMessage DisconnectDatabase(string id)
     {
         return _server.DisconnectDatabase(id);

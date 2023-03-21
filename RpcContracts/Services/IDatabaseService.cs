@@ -16,10 +16,7 @@ public interface IDatabaseService
     
     [OperationContract]
     DatabaseMessage CreateDatabase(DatabaseCreateMessage databaseCreateMessage);
-    
-    [OperationContract]
-    DatabaseMessage ConnectDatabase(string id);
-    
+
     [OperationContract]
     DatabaseDisconnectedMessage DisconnectDatabase(string id);
 }

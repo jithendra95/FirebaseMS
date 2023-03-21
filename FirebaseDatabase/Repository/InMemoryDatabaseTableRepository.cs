@@ -20,25 +20,26 @@ public class InMemoryDatabaseTableRepository : ITableRepository
 
     public IEnumerable<DatabaseTable> LoadTables(Database database)
     {
-        var tables = _databaseTableApi.Read(database);
-        var databaseTables = tables.ToList();
-        foreach (var databaseTable in databaseTables)
+        if (_databaseTableApi.Load(database))
         {
-            _databaseTables.Add(databaseTable);
-        }
+            var tables = _databaseTableApi.Read(database.Id);
+            var databaseTables = tables.ToList();
+            foreach (var databaseTable in databaseTables)
+            {
+                _databaseTables.Add(databaseTable);
+            }
 
-        _loadedDatabases.Add(database.Id, true);
-        return databaseTables.Where(table=> table.DatabaseId == database.Id).ToOriginalTree();
+            _loadedDatabases.Add(database.Id, true);
+        }
+        return _databaseTables.Where(table=> table.DatabaseId == database.Id).ToOriginalTree();
     }
 
     public bool UnLoadTables(string databaseId)
     {
-        if (_loadedDatabases.ContainsKey(databaseId))
-        {
-            _loadedDatabases.Remove(databaseId);
-            _databaseTables.RemoveAll(table => table.DatabaseId == databaseId);
-        }
-
+        if (!_loadedDatabases.ContainsKey(databaseId)) return false;
+        if (!_databaseTableApi.Delete(databaseId)) return false;
+        _loadedDatabases.Remove(databaseId);
+        _databaseTables.RemoveAll(table => table.DatabaseId == databaseId);
         return true;
     }
 

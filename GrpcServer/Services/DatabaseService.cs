@@ -1,5 +1,4 @@
-﻿using FirebaseDatabase;
-using FirebaseDatabase.Repository;
+﻿using FirebaseDatabase.Repository;
 using RpcContracts.DatabaseMessages;
 using RpcContracts.Extensions;
 using RpcContracts.Services;
@@ -77,17 +76,11 @@ public class DatabaseService : IDatabaseService
         }
     }
 
-    public DatabaseMessage ConnectDatabase(string id)
-    {
-        return _databaseRepository.ConnectDatabase(id).ToMessage();
-    }
-
     public DatabaseDisconnectedMessage DisconnectDatabase(string id)
     {
         try
         {
-            _tableRepository.UnLoadTables(id);
-            return new DatabaseDisconnectedMessage { IsDisconnected = _databaseRepository.DisconnectDatabase(id) };
+            return new DatabaseDisconnectedMessage { IsDisconnected = _tableRepository.UnLoadTables(id) };
         }
         catch (Exception e)
         {

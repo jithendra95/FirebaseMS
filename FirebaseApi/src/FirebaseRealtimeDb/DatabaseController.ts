@@ -1,17 +1,21 @@
 import {RealTimeDatabase} from "./RealTimeDatabase";
-import {DatabaseCredentials, DataBaseTypeEnum, Table} from "./Models";
+import {DataBaseTypeEnum, Table} from "./Models";
+import {CredentialManager} from "../CredentialManager/CredentialManager";
 
 
 export class DatabaseController {
     private static databases: { [key: string]: RealTimeDatabase | undefined } = {};
 
-    public static LoadDatabases(databaseCredentials: DatabaseCredentials) {
-        if (!this.databases[databaseCredentials.Id]) {
-            switch (databaseCredentials.DatabaseType) {
+    public static async LoadDatabases(credentialId: string) {
+        if (!this.databases[credentialId]) {
+            const databaseCredentials = await CredentialManager.GetCredentialsById(credentialId);
+            
+            switch (databaseCredentials.databaseType) {
                 case DataBaseTypeEnum.realtimeDb:
-                    this.databases[databaseCredentials.Id] = new RealTimeDatabase(
-                        databaseCredentials.PathToCredentials, databaseCredentials.Id,
-                        databaseCredentials.DatabaseUrl, databaseCredentials.DatabaseName);
+                    console.log(databaseCredentials)
+                    this.databases[credentialId] = new RealTimeDatabase(
+                        databaseCredentials.pathToCredentials, databaseCredentials.id,
+                        databaseCredentials.databaseUrl, databaseCredentials.databaseName);
                     break;
                 case DataBaseTypeEnum.firestore:
                     throw "Not Implemented";
@@ -20,6 +24,7 @@ export class DatabaseController {
     }
 
     public static async GetTablesForDatabase(id: string): Promise<Table[]> {
+        console.log(this.databases)
         return this.databases[id] ? this.databases[id]!.GetTables() : Promise.resolve([]);
     }
 

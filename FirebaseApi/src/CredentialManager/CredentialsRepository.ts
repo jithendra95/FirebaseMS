@@ -33,7 +33,7 @@ export class CredentialsRepository {
     public static CreateCredential(credential: DatabaseCredentials): void {
         const connection = CredentialsDatabase.Database();
         connection.run(`INSERT INTO credentials (id, databaseName, pathToCredentials, databaseUrl,databaseType) VALUES (?, ?, ?, ?, ?)`,
-            [uuidv4(), credential.DatabaseName, credential.PathToCredentials, credential.DatabaseUrl, credential.DatabaseType],
+            [uuidv4(), credential.databaseName, credential.pathToCredentials, credential.databaseUrl, credential.databaseType],
             function (error: Error) {
                 if (error) {
                     console.error(error.message);

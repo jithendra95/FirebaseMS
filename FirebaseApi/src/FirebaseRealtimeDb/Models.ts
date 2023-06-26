@@ -19,11 +19,11 @@ export enum DataBaseTypeEnum{
 }
 
 export interface DatabaseCredentials{
-    Id: string;
-    DatabaseName: string;
-    PathToCredentials: string;
-    DatabaseType: DataBaseTypeEnum
-    DatabaseUrl: string;
+    id: string;
+    databaseName: string;
+    pathToCredentials: string;
+    databaseType: DataBaseTypeEnum
+    databaseUrl: string;
 }
 
 export class TableRecord {

@@ -4,6 +4,7 @@ import {Table, TableData} from "./Models";
 import {DetectRootLevelObjects, DetectTables} from "./Serializer";
 import {IDatabase} from "../IDatabase";
 import Reference = database.Reference;
+import {BuildDatabaseTree} from "./DatabaseTableTreeBuilder";
 
 export class RealTimeDatabase implements IDatabase {
 
@@ -47,7 +48,7 @@ export class RealTimeDatabase implements IDatabase {
         attempt ??= 1;
         if (this.app) {
             if(this.dataFetchedOnce){
-                return Promise.resolve(this.allTables);
+                return Promise.resolve(BuildDatabaseTree(this.allTables));
             }
             else if (attempt <= this.maxAttempts) {
                 this.initializeListener()

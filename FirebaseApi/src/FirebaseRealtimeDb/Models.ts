@@ -5,6 +5,7 @@ export class Table {
     parentPath?: string;
     columns: string[] = [];
     numberOfRecords: number = 0;
+    childTables: Table[] = []
 
     constructor(name: string, path: string, databaseId: string) {
         this.name = name;

@@ -25,7 +25,6 @@ export class DatabaseController {
 
     public static DisconnectDatabase(id: string): boolean {
         let database = this.databases[id];
-        console.log(id)
         if (database) {
             database.Disconnect();
             return true;

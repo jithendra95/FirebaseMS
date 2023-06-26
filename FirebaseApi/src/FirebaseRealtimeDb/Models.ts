@@ -1,11 +1,10 @@
-
 export class Table {
     databaseId: string;
     name: string;
     path: string;
     parentPath?: string;
-    records: TableRecord[] = []
-    columns: string[] = []
+    columns: string[] = [];
+    numberOfRecords: number = 0;
 
     constructor(name: string, path: string, databaseId: string) {
         this.name = name;
@@ -13,12 +12,24 @@ export class Table {
         this.databaseId = databaseId;
     }
 }
-export enum DataBaseTypeEnum{
+
+export class TableData {
+    databaseId: string;
+    path: string;
+    records: TableRecord[] = []
+
+    constructor(path: string, databaseId: string) {
+        this.path = path;
+        this.databaseId = databaseId;
+    }
+}
+
+export enum DataBaseTypeEnum {
     firestore,
     realtimeDb
 }
 
-export interface DatabaseCredentials{
+export interface DatabaseCredentials {
     id: string;
     databaseName: string;
     pathToCredentials: string;
@@ -27,5 +38,5 @@ export interface DatabaseCredentials{
 }
 
 export class TableRecord {
-    values: {[key: string]: string} = {}
+    values: { [key: string]: string } = {}
 }

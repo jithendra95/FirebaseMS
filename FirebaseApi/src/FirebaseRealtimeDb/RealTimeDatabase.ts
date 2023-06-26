@@ -1,21 +1,21 @@
 import {database} from "firebase-admin";
 import {firebaseApp} from "../FirebaseInitializer";
-import {Table} from "./Models";
+import {Table, TableData} from "./Models";
 import {DetectRootLevelObjects, DetectTables} from "./Serializer";
 import {IDatabase} from "../IDatabase";
 import Reference = database.Reference;
-import {type} from "os";
 
 export class RealTimeDatabase implements IDatabase {
 
     private serviceAccount: string;
-    private databaseId: string;
+    private readonly databaseId: string;
     private databaseUrl: string;
     private allTables: Table[] = [];
+    private allTableData: TableData[] = [];
     private maxAttempts = 3;
     private dataFetchedOnce = false;
     private listener: any;
-    private ref?:  Reference;
+    private readonly ref?:  Reference;
     private readonly app;
 
     constructor(serviceAccountPath: string, databaseId: string, databaseUrl: string, appName: string) {
@@ -37,8 +37,9 @@ export class RealTimeDatabase implements IDatabase {
             this.listener = this.ref.on("value", (snapshot) => {
                 let root = snapshot.val();
                 this.allTables = []
-                DetectTables(root, "", this.allTables,"", this.databaseId);
-                DetectRootLevelObjects(root, this.allTables, this.databaseId);
+                this.allTableData = []
+                DetectTables(root, "", this.allTables,this.allTableData,"", this.databaseId);
+                DetectRootLevelObjects(root, this.allTables,this.allTableData, this.databaseId);
                 this.dataFetchedOnce = true
             });
     }
@@ -56,6 +57,11 @@ export class RealTimeDatabase implements IDatabase {
         } else {
             return Promise.resolve([]);
         }
+    }
+
+    public async GetTableData(path: string): Promise<TableData | undefined>{
+        let tableData = this.allTableData.find(x=> x.path === path)
+        return Promise.resolve(tableData);
     }
     
     public Disconnect(){

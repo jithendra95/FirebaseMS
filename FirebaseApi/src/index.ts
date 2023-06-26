@@ -31,16 +31,18 @@ app.delete('/credentials/:id', async function (req, res) {
     res.end(JSON.stringify({success: isDeleted}));
 })
 
+
 app.get('/database/:id', async function (req, res) {
     res.setHeader('content-type', 'application/json');
     let tables = await DatabaseController.GetTablesForDatabase(req.params.id);
     res.end(JSON.stringify(tables));
 })
 
-app.post('/database/:id', async function (req, res) {
+app.get('/database/:id/:path', async function (req, res) {
     res.setHeader('content-type', 'application/json');
-    await DatabaseController.LoadDatabases(req.params.id);
-    res.end("true");
+    console.log(req.params.path)
+    let tables = await DatabaseController.GetTableDataForDatabase(req.params.id, req.params.path);
+    res.end(JSON.stringify(tables));
 })
 
 app.delete('/database/:id', async function (req, res) {

@@ -1,6 +1,6 @@
-import {Table, TableRecord} from "./Models";
+import {Table, TableData, TableRecord} from "./Models";
 
-export function DetectTables(currentNode: any, currentNodeId: string, allTable: Table[], path: string, databaseId:string, parent?: Table) {
+export function DetectTables(currentNode: any, currentNodeId: string, allTable: Table[], allTableData: TableData[], path: string, databaseId: string, parent?: Table, tableData?: TableData) {
 
     if (typeof currentNode == "object") {
         let currentNodeKeys = Object.keys(currentNode);
@@ -10,21 +10,26 @@ export function DetectTables(currentNode: any, currentNodeId: string, allTable: 
             else
                 path = currentNodeId;
             let table = new Table(currentNodeId, path, databaseId)
+            let tableData = new TableData(path, databaseId)
             if (typeof parent !== "undefined") {
                 table.parentPath = parent.path
             }
             Object.keys(currentNode).map(key => {
-                DetectTables(currentNode[key], key, allTable, path, databaseId, table)
+                DetectTables(currentNode[key], key, allTable,allTableData, path, databaseId, table, tableData)
             });
-            if (!(table.name === "" && table.path === ""))
+            if (!(table.name === "" && table.path === "")){
+                table.numberOfRecords = tableData.records.length
                 allTable.push(table);
+                allTableData.push(tableData)
+            }
+
         } else {
-            CreateRecord(currentNode, currentNodeKeys, currentNodeId, parent);
+            CreateRecord(currentNode, currentNodeKeys, currentNodeId, parent, tableData);
         }
     }
 }
 
-function CreateRecord(currentNode: any, currentNodeKeys: string[], currentNodeId: string, parent?: Table) {
+function CreateRecord(currentNode: any, currentNodeKeys: string[], currentNodeId: string, parent?: Table, tableData?: TableData) {
     let record = new TableRecord();
     let columnsIdentified = (parent?.columns && parent?.columns.length > 0);
     if (!columnsIdentified) {
@@ -37,22 +42,25 @@ function CreateRecord(currentNode: any, currentNodeKeys: string[], currentNodeId
         if (!columnsIdentified)
             parent?.columns.push(key);
     })
-    parent?.records.push(record);
+    tableData?.records.push(record);
 }
 
-export function DetectRootLevelObjects(rootNode: any, allTables: Table[],  databaseId: string): void {
+export function DetectRootLevelObjects(rootNode: any, allTables: Table[],allTableData: TableData[], databaseId: string): void {
     if (typeof rootNode == "object") {
         let rootNodeKeys = Object.keys(rootNode);
-       
+
         rootNodeKeys.map(key => {
             let childNode = rootNode[key];
             let childNodeKeys = Object.keys(childNode);
-           
-            if(childNodeKeys.length > 0 && (typeof childNode[childNodeKeys[0]] !== 'object')){
+
+            if (childNodeKeys.length > 0 && (typeof childNode[childNodeKeys[0]] !== 'object')) {
                 let table = new Table(key, key, databaseId);
+                let tableData = new TableData(key, databaseId);
                 table.parentPath = "";
-                CreateRecord(childNode, childNodeKeys, key, table);
+                CreateRecord(childNode, childNodeKeys, key, table, tableData);
+                table.numberOfRecords = tableData.records.length
                 allTables.push(table);
+                allTableData.push(tableData)
             }
         })
     }

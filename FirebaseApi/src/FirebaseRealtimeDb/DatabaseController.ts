@@ -1,18 +1,19 @@
 import {RealTimeDatabase} from "./RealTimeDatabase";
-import {DataBaseTypeEnum, Table} from "./Models";
+import {DataBaseTypeEnum, Table, TableData} from "./Models";
 import {CredentialManager} from "../CredentialManager/CredentialManager";
 
 
 export class DatabaseController {
     private static databases: { [key: string]: RealTimeDatabase | undefined } = {};
 
-    public static async LoadDatabases(credentialId: string) {
-        if (!this.databases[credentialId]) {
+    public static async GetTablesForDatabase(credentialId: string): Promise<Table[]> {
+        if(!this.databases[credentialId]) {
+
+
             const databaseCredentials = await CredentialManager.GetCredentialsById(credentialId);
-            
+
             switch (databaseCredentials.databaseType) {
                 case DataBaseTypeEnum.realtimeDb:
-                    console.log(databaseCredentials)
                     this.databases[credentialId] = new RealTimeDatabase(
                         databaseCredentials.pathToCredentials, databaseCredentials.id,
                         databaseCredentials.databaseUrl, databaseCredentials.databaseName);
@@ -21,11 +22,11 @@ export class DatabaseController {
                     throw "Not Implemented";
             }
         }
+        return this.databases[credentialId]!.GetTables();
     }
 
-    public static async GetTablesForDatabase(id: string): Promise<Table[]> {
-        console.log(this.databases)
-        return this.databases[id] ? this.databases[id]!.GetTables() : Promise.resolve([]);
+    public static async GetTableDataForDatabase(credentialId: string, path: string): Promise<TableData |  undefined> {
+        return this.databases[credentialId] ? this.databases[credentialId]?.GetTableData(path): undefined;
     }
 
     public static DisconnectDatabase(id: string): boolean {

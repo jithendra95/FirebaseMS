@@ -45,6 +45,18 @@ app.get('/database/:id/:path', async function (req, res) {
     res.end(JSON.stringify(tables));
 })
 
+app.get('/database/:id/:path/:recordId', async function (req, res) {
+    res.setHeader('content-type', 'application/json');
+    let tableRecord = await DatabaseController.GetRecord(req.params.id, req.params.path, req.params.recordId);
+    res.end(JSON.stringify(tableRecord));
+})
+
+app.delete('/database/:id/:path/:recordId', async function (req, res) {
+    res.setHeader('content-type', 'application/json');
+    await DatabaseController.DeleteRecord(req.params.id, req.params.path, req.params.recordId);
+    res.end(JSON.stringify(true));
+})
+
 app.delete('/database/:id', async function (req, res) {
     res.setHeader('content-type', 'application/json');
     let isDisconnected = DatabaseController.DisconnectDatabase(req.params.id);

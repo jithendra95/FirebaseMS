@@ -1,10 +1,11 @@
 import {database} from "firebase-admin";
 import {firebaseApp} from "../FirebaseInitializer";
-import {Table, TableData} from "./Models";
+import {Table, TableData, TableRecord} from "./Models";
 import {DetectRootLevelObjects, DetectTables} from "./Serializer";
 import {IDatabase} from "../IDatabase";
 import Reference = database.Reference;
 import {BuildDatabaseTree} from "./DatabaseTableTreeBuilder";
+import Database = database.Database;
 
 export class RealTimeDatabase implements IDatabase {
 
@@ -17,6 +18,7 @@ export class RealTimeDatabase implements IDatabase {
     private dataFetchedOnce = false;
     private listener: any;
     private readonly ref?:  Reference;
+    private readonly db?:  Database;
     private readonly app;
 
     constructor(serviceAccountPath: string, databaseId: string, databaseUrl: string, appName: string) {
@@ -25,8 +27,8 @@ export class RealTimeDatabase implements IDatabase {
         this.databaseUrl = databaseUrl;
         try {
             this.app = firebaseApp(serviceAccountPath, databaseUrl, appName);
-            const db = database(this.app);
-            this.ref = db.ref('/');
+            this.db = database(this.app);
+            this.ref = this.db.ref('/');
         } catch {
             this.app = undefined;
         }
@@ -64,7 +66,20 @@ export class RealTimeDatabase implements IDatabase {
         let tableData = this.allTableData.find(x=> x.path === path)
         return Promise.resolve(tableData);
     }
-    
+
+    public async GetRecord(path: string, recordId: string): Promise<TableRecord | undefined>{
+        let tableData = this.allTableData.find(x=> x.path === path)
+        let tableRecord = tableData?.records.find(x=> x._id === recordId);
+        return Promise.resolve(tableRecord);
+    }
+
+    public async DeleteRecord(path: string, recordId: string): Promise<boolean>{
+        const refToDelete = path.replace(/\./g,'/')+'/'+ recordId;
+        await this.db?.ref(refToDelete).remove();
+        return Promise.resolve(true);
+    }
+
+
     public Disconnect(){
         this.ref?.off("value", this.listener);
         this.allTables.splice(0);

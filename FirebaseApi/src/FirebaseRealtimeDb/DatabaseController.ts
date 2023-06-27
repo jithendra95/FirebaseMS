@@ -6,7 +6,7 @@ import {CredentialManager} from "../CredentialManager/CredentialManager";
 export class DatabaseController {
     private static databases: { [key: string]: RealTimeDatabase | undefined } = {};
 
-    public static async GetTablesForDatabase(credentialId: string): Promise<Table[]> {
+    public static async GetTables(credentialId: string): Promise<Table[]> {
         if(!this.databases[credentialId]) {
 
 
@@ -25,7 +25,7 @@ export class DatabaseController {
         return this.databases[credentialId]!.GetTables();
     }
 
-    public static async GetTableDataForDatabase(credentialId: string, path: string): Promise<TableData |  undefined> {
+    public static async GetTableData(credentialId: string, path: string): Promise<TableData |  undefined> {
         return this.databases[credentialId] ? this.databases[credentialId]?.GetTableData(path): undefined;
     }
 

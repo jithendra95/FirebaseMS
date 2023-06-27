@@ -30,12 +30,8 @@ export function DetectTables(currentNode: any, currentNodeId: string, allTable: 
 }
 
 function CreateRecord(currentNode: any, currentNodeKeys: string[], currentNodeId: string, parent?: Table, tableData?: TableData) {
-    let record = new TableRecord();
+    let record = new TableRecord(currentNodeId);
     let columnsIdentified = (parent?.columns && parent?.columns.length > 0);
-    if (!columnsIdentified) {
-        parent?.columns.push("_id");
-    }
-    record.values["_id"] = currentNodeId;
 
     currentNodeKeys.map(key => {
         (typeof currentNode[key] !== "object") ? record.values[key] = currentNode[key] : record.values[key] = JSON.stringify(currentNode[key]);

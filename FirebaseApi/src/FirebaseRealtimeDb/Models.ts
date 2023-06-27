@@ -39,5 +39,10 @@ export interface DatabaseCredentials {
 }
 
 export class TableRecord {
+    id: string;
     values: { [key: string]: string } = {}
+
+    constructor(id: string) {
+        this.id = id;
+    }
 }

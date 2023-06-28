@@ -7,7 +7,7 @@ export class DatabaseController {
     private static databases: { [key: string]: RealTimeDatabase | undefined } = {};
 
     public static async GetTables(databaseId: string): Promise<Table[]> {
-        if(!this.databases[databaseId]) {
+        if (!this.databases[databaseId]) {
 
 
             const databaseCredentials = await CredentialManager.GetCredentialsById(databaseId);
@@ -25,18 +25,21 @@ export class DatabaseController {
         return this.databases[databaseId]!.GetTables();
     }
 
-    public static async GetTableData(databaseId: string, path: string): Promise<TableData |  undefined> {
-        return this.databases[databaseId] ? this.databases[databaseId]?.GetTableData(path): undefined;
+    public static async GetTableData(databaseId: string, path: string): Promise<TableData | undefined> {
+        return this.databases[databaseId] ? this.databases[databaseId]?.GetTableData(path) : undefined;
     }
 
-    public static async GetRecord(databaseId: string, path: string, recordId: string): Promise<TableRecord | undefined>{
-       return this.databases[databaseId] ? this.databases[databaseId]?.GetRecord(path, recordId): undefined;
+    public static async GetRecord(databaseId: string, path: string, recordId: string): Promise<TableRecord | undefined> {
+        return this.databases[databaseId] ? this.databases[databaseId]?.GetRecord(path, recordId) : undefined;
+    }
+
+    public static async CreateRecord(databaseId: string, path: string, recordId: string | undefined, data: object): Promise<void> {
+        if (this.databases[databaseId]) this.databases[databaseId]?.CreateRecord(path, recordId, data);
     }
 
     public static async DeleteRecord(databaseId: string, path: string, recordId: string): Promise<void> {
-        if(this.databases[databaseId] ) this.databases[databaseId]?.DeleteRecord(path, recordId);
+        if (this.databases[databaseId]) this.databases[databaseId]?.DeleteRecord(path, recordId);
     }
-
 
 
     public static DisconnectDatabase(id: string): boolean {

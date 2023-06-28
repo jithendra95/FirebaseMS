@@ -46,6 +46,7 @@ export class RealTimeDatabase implements IDatabase {
                 this.dataFetchedOnce = true
             });
     }
+
     public async GetTables(attempt? :number): Promise<Table[]> {
         attempt ??= 1;
         if (this.app) {
@@ -71,6 +72,16 @@ export class RealTimeDatabase implements IDatabase {
         let tableData = this.allTableData.find(x=> x.path === path)
         let tableRecord = tableData?.records.find(x=> x._id === recordId);
         return Promise.resolve(tableRecord);
+    }
+
+    public async CreateRecord(path: string, id: string | undefined, data: object): Promise<void>{
+        const pathToAdd = path.replace(/\./g,'/');
+        const refToAdd = this.db?.ref(pathToAdd);
+        if(typeof id !== "undefined"){
+            refToAdd?.child(id).set(data)
+        }
+
+        refToAdd?.push().set(data);
     }
 
     public async DeleteRecord(path: string, recordId: string): Promise<boolean>{

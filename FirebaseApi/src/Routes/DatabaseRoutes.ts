@@ -23,6 +23,12 @@ databaseRouter.get('/database/:id/:path/:recordId', async function (req, res) {
     res.end(JSON.stringify(tableRecord));
 })
 
+databaseRouter.post('/database/:id/:path/:recordId', async function (req, res) {
+    res.setHeader('content-type', 'application/json');
+    await DatabaseController.CreateRecord(req.params.id, req.params.path, req.params.recordId,req.body);
+    res.end("true");
+})
+
 databaseRouter.delete('/database/:id/:path/:recordId', async function (req, res) {
     res.setHeader('content-type', 'application/json');
     await DatabaseController.DeleteRecord(req.params.id, req.params.path, req.params.recordId);

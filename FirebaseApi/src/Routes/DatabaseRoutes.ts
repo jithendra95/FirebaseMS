@@ -1,5 +1,4 @@
 import express from "express";
-import {CredentialManager} from "../CredentialManager/CredentialManager";
 import {DatabaseController} from "../FirebaseRealtimeDb/DatabaseController";
 
 const databaseRouter = express.Router();
@@ -25,7 +24,12 @@ databaseRouter.get('/database/:id/:path/:recordId', async function (req, res) {
 
 databaseRouter.post('/database/:id/:path/:recordId', async function (req, res) {
     res.setHeader('content-type', 'application/json');
-    await DatabaseController.CreateRecord(req.params.id, req.params.path, req.params.recordId,req.body);
+    await DatabaseController.CreateRecord(req.params.id, req.params.path, req.params.recordId, req.body);
+    res.end("true");
+})
+databaseRouter.post('/database/:id/:path/', async function (req, res) {
+    res.setHeader('content-type', 'application/json');
+    await DatabaseController.CreateRecord(req.params.id, req.params.path, undefined, req.body);
     res.end("true");
 })
 
